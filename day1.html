@@ -38,6 +38,28 @@ body {
 
 ruby rt { font-size: 10px; color: var(--ruby); font-weight: 400; }
 
+/* ── Speak button ── */
+.speak-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent-light);
+  border: none;
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent);
+  cursor: pointer;
+  gap: 5px;
+  margin-top: 10px;
+  transition: background 0.15s, transform 0.1s;
+  font-family: 'Noto Sans TC', sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+.speak-btn:active { transform: scale(0.95); }
+.speak-btn.speaking { background: var(--accent); color: #fff; }
+
 /* ── Header ── */
 .page-header {
   background: var(--card);
@@ -136,7 +158,7 @@ details.chat-bubble summary::-webkit-details-marker { display: none; }
   color: var(--green-dark);
 }
 .bubble-expanded {
-  padding: 10px 17px 14px;
+  padding: 10px 17px 4px;
   font-size: 15px;
   color: var(--sub);
   line-height: 1.7;
@@ -149,6 +171,9 @@ details.chat-bubble summary::-webkit-details-marker { display: none; }
   color: var(--text);
   margin-bottom: 4px;
   font-family: 'Noto Sans TC', sans-serif;
+}
+.bubble-foot {
+  padding: 4px 17px 14px;
 }
 
 /* ── Sentence cards ── */
@@ -199,6 +224,7 @@ details.chat-bubble summary::-webkit-details-marker { display: none; }
   font-weight: 700;
   color: var(--accent);
   line-height: 1.5;
+  margin-bottom: 0;
 }
 .sent-note {
   font-size: 13px;
@@ -253,7 +279,7 @@ details.vocab-card summary::-webkit-details-marker { display: none; }
 }
 .vocab-ex {
   margin-bottom: 8px;
-  padding: 10px 12px;
+  padding: 10px 12px 12px;
   background: var(--bg);
   border-radius: 10px;
   border-left: 3px solid var(--accent);
@@ -272,29 +298,6 @@ details.vocab-card summary::-webkit-details-marker { display: none; }
   color: var(--sub);
   display: block;
 }
-
-/* ── Grammar memo ── */
-.grammar-card {
-  margin: 6px 12px;
-  background: var(--grammar-light);
-  border: 1px solid #a8d4b8;
-  border-radius: 16px;
-  padding: 16px 18px;
-  box-shadow: var(--shadow);
-}
-.grammar-title { font-size: 13px; font-weight: 700; letter-spacing: 1px; color: var(--grammar); margin-bottom: 10px; }
-.grammar-pattern {
-  font-family: 'Noto Sans JP', sans-serif;
-  font-size: 16px; font-weight: 700;
-  color: var(--text); margin-bottom: 14px; line-height: 1.6;
-}
-.grammar-pattern .hl { background: var(--grammar); color: #fff; padding: 2px 6px; border-radius: 5px; }
-.grammar-table { width: 100%; border-collapse: collapse; font-size: 15px; }
-.grammar-table tr { border-bottom: 1px solid #b8d8c4; }
-.grammar-table tr:last-child { border-bottom: none; }
-.grammar-table td { padding: 9px 4px; font-family: 'Noto Sans JP', sans-serif; }
-.grammar-table td:last-child { color: var(--sub); font-family: 'Noto Sans TC', sans-serif; text-align: right; }
-.g-hl { background: var(--grammar); color: #fff; padding: 0 4px; border-radius: 3px; font-weight: 700; }
 
 /* ── Practice ── */
 .practice-list { display: flex; flex-direction: column; gap: 8px; padding: 0 12px; }
@@ -350,15 +353,11 @@ details.practice-item summary::-webkit-details-marker { display: none; }
 <div class="scene-card">
   <div class="scene-svg-wrap">
     <svg class="scene-svg" viewBox="0 0 360 160" xmlns="http://www.w3.org/2000/svg">
-      <!-- Sky -->
       <rect width="360" height="160" fill="#cddff5"/>
-      <!-- Sea -->
       <rect x="0" y="108" width="360" height="52" fill="#5a9abf"/>
       <rect x="0" y="106" width="360" height="6" fill="#4a8aaf" opacity="0.6"/>
-      <!-- Waves -->
       <path d="M0 118 Q30 113 60 118 Q90 123 120 118 Q150 113 180 118 Q210 123 240 118 Q270 113 300 118 Q330 123 360 118" stroke="#7ab8d8" stroke-width="2" fill="none" opacity="0.7"/>
       <path d="M0 130 Q40 125 80 130 Q120 135 160 130 Q200 125 240 130 Q300 135 360 130" stroke="#7ab8d8" stroke-width="1.5" fill="none" opacity="0.5"/>
-      <!-- Dock -->
       <rect x="0" y="100" width="360" height="12" fill="#c4a97a"/>
       <rect x="0" y="98" width="360" height="4" fill="#b89860"/>
       <rect x="30" y="80" width="8" height="22" rx="2" fill="#a08050"/>
@@ -366,40 +365,33 @@ details.practice-item summary::-webkit-details-marker { display: none; }
       <rect x="170" y="80" width="8" height="22" rx="2" fill="#a08050"/>
       <rect x="240" y="80" width="8" height="22" rx="2" fill="#a08050"/>
       <rect x="310" y="80" width="8" height="22" rx="2" fill="#a08050"/>
-      <!-- Ship hull -->
       <rect x="60" y="60" width="240" height="45" rx="6" fill="#f0f0f0"/>
       <rect x="55" y="98" width="250" height="10" rx="4" fill="#d44"/>
       <rect x="80" y="40" width="160" height="24" rx="4" fill="#e8e8e8"/>
       <rect x="110" y="22" width="60" height="20" rx="3" fill="#ddd"/>
-      <!-- Funnel -->
       <rect x="148" y="12" width="24" height="18" rx="3" fill="#cc3333"/>
       <rect x="152" y="8" width="16" height="6" rx="2" fill="#aa2222"/>
-      <!-- Ship windows -->
       <circle cx="100" cy="75" r="6" fill="#b0d4f0" opacity="0.9"/>
       <circle cx="130" cy="75" r="6" fill="#b0d4f0" opacity="0.9"/>
       <circle cx="160" cy="75" r="6" fill="#b0d4f0" opacity="0.9"/>
       <circle cx="190" cy="75" r="6" fill="#b0d4f0" opacity="0.9"/>
       <circle cx="220" cy="75" r="6" fill="#b0d4f0" opacity="0.9"/>
       <circle cx="250" cy="75" r="6" fill="#b0d4f0" opacity="0.9"/>
-      <!-- Port staff (left) -->
       <circle cx="42" cy="68" r="10" fill="#f5cba7"/>
-      <rect cx="42" cy="68" x="32" y="58" width="20" height="8" rx="4" fill="#1a3a6a"/>
+      <rect x="32" y="58" width="20" height="8" rx="4" fill="#1a3a6a"/>
       <rect x="33" y="78" width="18" height="24" rx="5" fill="#2d5fa0"/>
       <line x1="33" y1="90" x2="22" y2="96" stroke="#f5cba7" stroke-width="5" stroke-linecap="round"/>
       <line x1="51" y1="90" x2="60" y2="96" stroke="#f5cba7" stroke-width="5" stroke-linecap="round"/>
       <rect x="35" y="102" width="8" height="18" rx="3" fill="#1a3a6a"/>
       <rect x="46" y="102" width="8" height="18" rx="3" fill="#1a3a6a"/>
-      <!-- Traveller (right) -->
       <circle cx="318" cy="64" r="12" fill="#f5cba7"/>
       <rect x="308" y="52" width="22" height="9" rx="5" fill="#4a2e10"/>
       <rect x="306" y="76" width="24" height="28" rx="7" fill="#3a7ca5"/>
       <line x1="306" y1="88" x2="293" y2="96" stroke="#f5cba7" stroke-width="5" stroke-linecap="round"/>
       <line x1="330" y1="88" x2="336" y2="96" stroke="#f5cba7" stroke-width="5" stroke-linecap="round"/>
-      <!-- Luggage -->
       <rect x="333" y="90" width="18" height="22" rx="4" fill="#e8a020"/>
       <rect x="338" y="87" width="8" height="5" rx="2" fill="#c88010"/>
       <line x1="333" y1="101" x2="351" y2="101" stroke="#c88010" stroke-width="1.5"/>
-      <!-- Wave detail -->
       <ellipse cx="160" cy="140" rx="80" ry="6" fill="#4a8aaf" opacity="0.3"/>
     </svg>
   </div>
@@ -421,6 +413,9 @@ details.practice-item summary::-webkit-details-marker { display: none; }
             白天通用的問候語。
           </div>
         </details>
+        <div class="bubble-foot">
+          <button class="speak-btn" onclick="speak('こんにちは')">🔊 發音</button>
+        </div>
       </div>
     </div>
   </div>
@@ -437,6 +432,9 @@ details.practice-item summary::-webkit-details-marker { display: none; }
             打招呼後直接接「よろしくお願いします」，自然又有禮貌。
           </div>
         </details>
+        <div class="bubble-foot">
+          <button class="speak-btn" onclick="speak('こんにちは。よろしくお願いします。')">🔊 發音</button>
+        </div>
       </div>
     </div>
   </div>
@@ -453,6 +451,9 @@ details.practice-item summary::-webkit-details-marker { display: none; }
             帶路時常說的話，跟著走就對了。
           </div>
         </details>
+        <div class="bubble-foot">
+          <button class="speak-btn" onclick="speak('こちらへどうぞ。')">🔊 發音</button>
+        </div>
       </div>
     </div>
   </div>
@@ -469,6 +470,9 @@ details.practice-item summary::-webkit-details-marker { display: none; }
             正式道謝。輕鬆版可說「ありがとう」。
           </div>
         </details>
+        <div class="bubble-foot">
+          <button class="speak-btn" onclick="speak('ありがとうございます。')">🔊 發音</button>
+        </div>
       </div>
     </div>
   </div>
@@ -488,6 +492,7 @@ details.practice-item summary::-webkit-details-marker { display: none; }
     你好。
     <div class="sent-note">白天（約早上10點～下午5點）使用。早上說「おはようございます」，傍晚後說「こんばんは」。</div>
   </div>
+  <button class="speak-btn" onclick="speak('こんにちは')">🔊 發音</button>
 </div>
 
 <div class="sentence-card">
@@ -499,6 +504,7 @@ details.practice-item summary::-webkit-details-marker { display: none; }
     請多關照。／麻煩你了。
     <div class="sent-note">初次見面、拜託對方幫忙，甚至搭計程車上車時都能用。郵輪旅遊全程超高頻句。</div>
   </div>
+  <button class="speak-btn" onclick="speak('よろしくお願いします')">🔊 發音</button>
 </div>
 
 <div class="sentence-card">
@@ -510,6 +516,7 @@ details.practice-item summary::-webkit-details-marker { display: none; }
     謝謝你。
     <div class="sent-note">正式場合用完整版。朋友之間可說「ありがとう」。收到東西、得到幫助都用這句。</div>
   </div>
+  <button class="speak-btn" onclick="speak('ありがとうございます')">🔊 發音</button>
 </div>
 
 <!-- Vocab -->
@@ -529,10 +536,12 @@ details.practice-item summary::-webkit-details-marker { display: none; }
       <div class="vocab-ex">
         <span class="ex-jp">よろしくお願いします。</span>
         <span class="ex-tc">請多關照。</span>
+        <button class="speak-btn" onclick="speak('よろしくお願いします')">🔊 發音</button>
       </div>
       <div class="vocab-ex">
         <span class="ex-jp"><ruby>那覇空港<rt>なはくうこう</rt></ruby>まで、お願いします。</span>
-        <span class="ex-tc">到那霸機場，麻煩你。（計程車用語，Day3 會學到）</span>
+        <span class="ex-tc">到那霸機場，麻煩你。（Day3 計程車用語）</span>
+        <button class="speak-btn" onclick="speak('那覇空港まで、お願いします')">🔊 發音</button>
       </div>
     </div>
   </details>
@@ -550,10 +559,12 @@ details.practice-item summary::-webkit-details-marker { display: none; }
       <div class="vocab-ex">
         <span class="ex-jp">ありがとうございます。</span>
         <span class="ex-tc">謝謝你。</span>
+        <button class="speak-btn" onclick="speak('ありがとうございます')">🔊 發音</button>
       </div>
       <div class="vocab-ex">
         <span class="ex-jp">おはようございます。</span>
         <span class="ex-tc">早安。</span>
+        <button class="speak-btn" onclick="speak('おはようございます')">🔊 發音</button>
       </div>
     </div>
   </details>
@@ -571,10 +582,12 @@ details.practice-item summary::-webkit-details-marker { display: none; }
       <div class="vocab-ex">
         <span class="ex-jp">よろしくお願いします。</span>
         <span class="ex-tc">請多關照。（正式）</span>
+        <button class="speak-btn" onclick="speak('よろしくお願いします')">🔊 發音</button>
       </div>
       <div class="vocab-ex">
         <span class="ex-jp">よろしく！</span>
         <span class="ex-tc">麻煩你了！（輕鬆版）</span>
+        <button class="speak-btn" onclick="speak('よろしく')">🔊 發音</button>
       </div>
     </div>
   </details>
@@ -594,6 +607,7 @@ details.practice-item summary::-webkit-details-marker { display: none; }
       <span class="ans-label">答案</span>
       <div class="ans-jp">こんにちは。よろしくお願いします。</div>
       <div class="ans-tc">先回應問候，再接「よろしくお願いします」，一氣呵成。</div>
+      <button class="speak-btn" onclick="speak('こんにちは。よろしくお願いします。')">🔊 發音</button>
     </div>
   </details>
 
@@ -606,6 +620,7 @@ details.practice-item summary::-webkit-details-marker { display: none; }
       <span class="ans-label">答案</span>
       <div class="ans-jp">ありがとうございます。</div>
       <div class="ans-tc">正式場合一律用「ございます」版，不會出錯。</div>
+      <button class="speak-btn" onclick="speak('ありがとうございます')">🔊 發音</button>
     </div>
   </details>
 
@@ -618,15 +633,41 @@ details.practice-item summary::-webkit-details-marker { display: none; }
       <span class="ans-label">答案</span>
       <div class="ans-jp">你好 ／ 謝謝 ／ 拜託了</div>
       <div class="ans-tc">這三句是正式版的輕鬆說法，熟人之間使用。正式場合加上「ございます」或「お願いします」。</div>
+      <button class="speak-btn" onclick="speak('こんにちは。ありがとう。よろしく。')">🔊 依序發音</button>
     </div>
   </details>
 
 </div>
 
 <div class="page-footer">
-  使用原生 &lt;details&gt;/&lt;summary&gt; 互動，免 JavaScript<br>
-  手機瀏覽器、LINE 內建瀏覽器皆可正常點擊
+  🔊 發音由 Safari 內建日語語音引擎提供<br>
+  手機 Safari 直接點擊即可播放
 </div>
+
+<script>
+function speak(text) {
+  if (!('speechSynthesis' in window)) {
+    alert('請使用 Safari 瀏覽器以啟用發音功能。');
+    return;
+  }
+  window.speechSynthesis.cancel();
+  var utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'ja-JP';
+  utter.rate = 1.0;
+  utter.pitch = 1.0;
+  var voices = window.speechSynthesis.getVoices();
+  var jaVoice = voices.find(function(v){ return v.lang === 'ja-JP'; })
+             || voices.find(function(v){ return v.lang.startsWith('ja'); });
+  if (jaVoice) utter.voice = jaVoice;
+  window.speechSynthesis.speak(utter);
+}
+if ('speechSynthesis' in window) {
+  window.speechSynthesis.onvoiceschanged = function() {
+    window.speechSynthesis.getVoices();
+  };
+  window.speechSynthesis.getVoices();
+}
+</script>
 
 </body>
 </html>
