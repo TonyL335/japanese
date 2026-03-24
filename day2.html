@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>田中慶介日語課 DAY2 海關申報</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Noto+Sans+TC:wght@400;700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #f0f3f8;
+  --card: #ffffff;
+  --border: #dde2ea;
+  --text: #1a2332;
+  --sub: #5a6a7d;
+  --accent: #2d5fa0;
+  --accent-light: #e4ecf8;
+  --green-light: #e4f2eb;
+  --green-dark: #1a3a2a;
+  --gray-bubble: #eceef2;
+  --ruby: #2d5fa0;
+  --grammar: #2d6a4f;
+  --grammar-light: #e4f2eb;
+  --shadow: 0 2px 10px rgba(0,0,0,0.07);
+  --speak-bg: #c8cdd6;
+  --speak-bg-active: #b0b6c0;
+  --speak-size: 34px;
+}
+
+body {
+  font-family: 'Noto Sans TC', 'Noto Sans JP', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  padding: 0 0 52px;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+ruby rt { font-size: 10px; color: var(--ruby); font-weight: 400; }
+
+.speak-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: var(--speak-size); height: var(--speak-size);
+  border-radius: 50%; background: var(--speak-bg); border: none;
+  cursor: pointer; font-size: 15px; line-height: 1; flex-shrink: 0;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.15s, transform 0.1s, box-shadow 0.15s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.18);
+}
+.speak-btn:active { transform: scale(0.92); background: var(--speak-bg-active); box-shadow: 0 1px 3px rgba(0,0,0,0.15); }
+.bubble-foot { padding: 6px 14px 12px; display: flex; align-items: center; gap: 8px; }
+.speak-row { display: flex; align-items: center; gap: 8px; margin-top: 10px; }
+.ex-speak-row { display: flex; align-items: center; gap: 6px; margin-top: 6px; }
+
+.page-header { background: var(--card); border-bottom: 1px solid var(--border); padding: 18px 18px 16px; }
+.page-tag {
+  display: inline-flex; align-items: center; font-size: 12px; color: var(--sub);
+  background: var(--accent-light); padding: 4px 12px; border-radius: 20px;
+  margin-bottom: 10px; font-weight: 700; letter-spacing: 0.5px;
+}
+.page-header h1 { font-size: 26px; font-weight: 900; color: var(--text); }
+.page-header p { font-size: 14px; color: var(--sub); margin-top: 5px; }
+
+.section-label {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 20px 16px 8px; font-size: 15px; font-weight: 700; color: var(--text);
+}
+.section-label span { font-size: 12px; color: var(--sub); font-weight: 400; }
+
+.scene-card { margin: 0 12px 4px; background: var(--card); border-radius: 18px; overflow: hidden; border: 1px solid var(--border); box-shadow: var(--shadow); }
+.scene-svg-wrap { background: linear-gradient(180deg, #cddff5 0%, #e8f0fa 100%); padding: 20px 16px 16px; }
+.scene-svg { width: 100%; display: block; }
+
+.chat-area { padding: 0 12px; display: flex; flex-direction: column; gap: 10px; }
+.chat-row { display: flex; align-items: flex-end; gap: 10px; }
+.chat-row.right { flex-direction: row-reverse; }
+.chat-avatar { width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 20px; border: 2px solid var(--border); background: var(--card); }
+.chat-col { display: flex; flex-direction: column; max-width: 78%; gap: 4px; }
+.chat-row.right .chat-col { align-items: flex-end; }
+.chat-role { font-size: 12px; color: var(--sub); font-weight: 700; padding: 0 4px; }
+.bubble-card { background: var(--card); border-radius: 18px; border: 1px solid var(--border); box-shadow: var(--shadow); overflow: hidden; width: 100%; }
+details.chat-bubble summary { list-style: none; cursor: pointer; user-select: none; }
+details.chat-bubble summary::-webkit-details-marker { display: none; }
+.bubble-body { padding: 13px 17px; font-family: 'Noto Sans JP', sans-serif; font-size: 18px; font-weight: 700; line-height: 1.5; color: var(--text); background: var(--gray-bubble); }
+.bubble-body.student { background: var(--green-light); color: var(--green-dark); }
+.bubble-expanded { padding: 10px 17px 4px; font-size: 15px; color: var(--sub); line-height: 1.7; border-top: 1px solid var(--border); }
+.bubble-expanded .tc { display: block; font-size: 17px; font-weight: 700; color: var(--text); margin-bottom: 4px; font-family: 'Noto Sans TC', sans-serif; }
+
+.sentence-card { margin: 6px 12px; background: var(--card); border-radius: 18px; border: 1px solid var(--border); box-shadow: var(--shadow); overflow: hidden; padding: 16px 18px 18px; }
+.sent-num { font-size: 11px; font-weight: 700; letter-spacing: 2.5px; color: var(--accent); margin-bottom: 6px; }
+.sent-reading { font-size: 13px; color: var(--ruby); font-family: 'Noto Sans JP', sans-serif; letter-spacing: 2px; margin-bottom: 4px; min-height: 20px; }
+.sent-main { font-size: 30px; font-weight: 900; font-family: 'Noto Sans JP', sans-serif; color: var(--text); line-height: 1.4; margin-bottom: 10px; }
+.sent-chunks { font-size: 14px; color: var(--sub); font-family: 'Noto Sans JP', sans-serif; margin-bottom: 12px; letter-spacing: 0.5px; }
+.sent-meaning { background: var(--accent-light); border-radius: 10px; padding: 12px 14px; font-size: 16px; font-weight: 700; color: var(--accent); line-height: 1.5; }
+.sent-note { font-size: 13px; color: var(--sub); font-weight: 400; margin-top: 4px; line-height: 1.6; }
+
+.vocab-list { display: flex; flex-direction: column; gap: 8px; padding: 0 12px; }
+details.vocab-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; box-shadow: var(--shadow); overflow: hidden; }
+details.vocab-card summary { list-style: none; padding: 16px 18px; cursor: pointer; user-select: none; display: flex; align-items: center; gap: 12px; }
+details.vocab-card summary::-webkit-details-marker { display: none; }
+.vocab-reading { font-size: 12px; color: var(--sub); font-family: 'Noto Sans JP', sans-serif; display: block; margin-bottom: 4px; }
+.vocab-kanji { font-size: 22px; font-weight: 700; font-family: 'Noto Sans JP', sans-serif; color: var(--text); }
+.vocab-pitch { margin-left: auto; background: var(--accent-light); border-radius: 8px; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700; color: var(--accent); flex-shrink: 0; }
+.vocab-detail { padding: 2px 18px 18px; border-top: 1px solid var(--border); }
+.vocab-meaning { font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 10px; padding-top: 12px; font-family: 'Noto Sans TC', sans-serif; }
+.vocab-ex { margin-bottom: 8px; padding: 10px 12px 12px; background: var(--bg); border-radius: 10px; border-left: 3px solid var(--accent); }
+.vocab-ex .ex-jp { font-size: 16px; font-weight: 700; font-family: 'Noto Sans JP', sans-serif; color: var(--text); display: block; margin-bottom: 4px; line-height: 1.5; }
+.vocab-ex .ex-tc { font-size: 13px; color: var(--sub); display: block; }
+
+.grammar-card { margin: 6px 12px; background: var(--grammar-light); border: 1px solid #a8d4b8; border-radius: 16px; padding: 16px 18px; box-shadow: var(--shadow); }
+.grammar-title { font-size: 13px; font-weight: 700; letter-spacing: 1px; color: var(--grammar); margin-bottom: 10px; }
+.grammar-pattern { font-family: 'Noto Sans JP', sans-serif; font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 14px; line-height: 1.6; }
+.grammar-pattern .hl { background: var(--grammar); color: #fff; padding: 2px 6px; border-radius: 5px; }
+.grammar-table { width: 100%; border-collapse: collapse; font-size: 15px; }
+.grammar-table tr { border-bottom: 1px solid #b8d8c4; }
+.grammar-table tr:last-child { border-bottom: none; }
+.grammar-table td { padding: 9px 4px; font-family: 'Noto Sans JP', sans-serif; }
+.grammar-table td:last-child { color: var(--sub); font-family: 'Noto Sans TC', sans-serif; text-align: right; }
+.g-hl { background: var(--grammar); color: #fff; padding: 0 4px; border-radius: 3px; font-weight: 700; }
+
+.practice-list { display: flex; flex-direction: column; gap: 8px; padding: 0 12px; }
+details.practice-item { background: var(--card); border: 1px solid var(--border); border-radius: 16px; box-shadow: var(--shadow); overflow: hidden; }
+details.practice-item summary { list-style: none; padding: 16px 18px; cursor: pointer; user-select: none; font-size: 15px; font-weight: 700; color: var(--text); line-height: 1.6; }
+details.practice-item summary::-webkit-details-marker { display: none; }
+.q-num { font-size: 11px; font-weight: 700; color: var(--accent); letter-spacing: 1px; display: block; margin-bottom: 6px; }
+.ans-body { padding: 2px 18px 18px; border-top: 1px solid var(--border); }
+.ans-label { font-size: 11px; font-weight: 700; color: var(--grammar); letter-spacing: 1px; display: block; padding-top: 14px; margin-bottom: 8px; }
+.ans-jp { font-size: 22px; font-weight: 900; font-family: 'Noto Sans JP', sans-serif; color: var(--text); margin-bottom: 6px; line-height: 1.5; }
+.ans-tc { font-size: 14px; color: var(--sub); line-height: 1.7; }
+
+.page-footer { margin: 24px 12px 0; padding: 16px 18px; background: var(--card); border-radius: 14px; border: 1px solid var(--border); font-size: 12px; color: var(--sub); line-height: 1.7; text-align: center; }
+.spacer { height: 8px; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="page-tag">田中慶介日語課 ｜ DAY 2 手機相容版</div>
+  <h1>海關申報</h1>
+  <p>申告 ／ 土産 ／ 個人で使う</p>
+</div>
+
+<!-- 場景插圖 -->
+<div class="section-label">場景插圖</div>
+<div class="scene-card">
+  <div class="scene-svg-wrap">
+    <svg class="scene-svg" viewBox="0 0 360 160" xmlns="http://www.w3.org/2000/svg">
+      <!-- 地板 -->
+      <rect x="0" y="118" width="360" height="42" fill="#dde8f0"/>
+      <!-- 背牆 -->
+      <rect x="0" y="0" width="360" height="118" fill="#eef3f8"/>
+      <!-- 海關櫃台 -->
+      <rect x="130" y="88" width="120" height="32" rx="4" fill="#c8c4ba" stroke="#a8a49a" stroke-width="0.8"/>
+      <rect x="130" y="82" width="120" height="10" rx="3" fill="#b0aca2"/>
+      <rect x="148" y="93" width="50" height="16" rx="3" fill="#8a8780"/>
+      <text font-family="sans-serif" font-size="8" font-weight="700" fill="#f0ede6" text-anchor="middle" x="173" y="104">税　関</text>
+      <!-- 電腦螢幕 -->
+      <rect x="210" y="84" width="28" height="20" rx="2" fill="#3a3a44" stroke="#2a2a30" stroke-width="0.5"/>
+      <rect x="212" y="86" width="24" height="14" rx="1" fill="#2a3a5a"/>
+      <rect x="220" y="104" width="8" height="3" rx="1" fill="#3a3a44"/>
+
+      <!-- 海關人員（右側）-->
+      <!-- 腳 -->
+      <rect x="252" y="108" width="8" height="14" rx="3" fill="#223060"/>
+      <rect x="262" y="108" width="8" height="14" rx="3" fill="#223060"/>
+      <!-- 鞋 -->
+      <rect x="250" y="118" width="10" height="5" rx="2" fill="#111"/>
+      <rect x="260" y="118" width="10" height="5" rx="2" fill="#111"/>
+      <!-- 身體 -->
+      <rect x="246" y="74" width="32" height="38" rx="6" fill="#2e5080"/>
+      <!-- 徽章 -->
+      <rect x="252" y="80" width="12" height="8" rx="1" fill="#f0c030"/>
+      <!-- 手臂 -->
+      <rect x="234" y="78" width="14" height="7" rx="3" fill="#2e5080"/>
+      <rect x="276" y="78" width="14" height="7" rx="3" fill="#2e5080"/>
+      <!-- 頸 -->
+      <rect x="258" y="64" width="10" height="12" rx="3" fill="#c8a07a"/>
+      <!-- 頭 -->
+      <ellipse cx="263" cy="56" rx="14" ry="14" fill="#c8a07a"/>
+      <!-- 帽子 -->
+      <rect x="249" y="46" width="28" height="6" rx="2" fill="#1a2848"/>
+      <rect x="253" y="38" width="20" height="12" rx="2" fill="#1a2848"/>
+      <!-- 眼睛 -->
+      <circle cx="258" cy="53" r="1.5" fill="#3a2010"/>
+      <circle cx="268" cy="53" r="1.5" fill="#3a2010"/>
+      <!-- 嘴 -->
+      <path d="M259 60 Q263 62 267 60" stroke="#9a7050" stroke-width="0.8" fill="none" stroke-linecap="round"/>
+
+      <!-- 旅客（左側） -->
+      <!-- 行李箱 -->
+      <rect x="52" y="100" width="20" height="24" rx="3" fill="#d85a30" stroke="#993c1d" stroke-width="0.6"/>
+      <rect x="59" y="97" width="6" height="5" rx="2" fill="#993c1d"/>
+      <line x1="52" y1="112" x2="72" y2="112" stroke="#993c1d" stroke-width="0.8"/>
+      <!-- 腳 -->
+      <rect x="82" y="108" width="8" height="14" rx="3" fill="#1a4040"/>
+      <rect x="92" y="108" width="8" height="14" rx="3" fill="#1a4040"/>
+      <!-- 鞋 -->
+      <rect x="80" y="118" width="10" height="5" rx="2" fill="#0a1a0a"/>
+      <rect x="90" y="118" width="10" height="5" rx="2" fill="#0a1a0a"/>
+      <!-- 身體 -->
+      <rect x="76" y="74" width="30" height="38" rx="6" fill="#1d9e75"/>
+      <!-- 手臂 -->
+      <rect x="63" y="79" width="14" height="7" rx="3" fill="#1d9e75"/>
+      <rect x="105" y="79" width="14" height="7" rx="3" fill="#1d9e75"/>
+      <!-- 頸 -->
+      <rect x="86" y="64" width="10" height="12" rx="3" fill="#c8a07a"/>
+      <!-- 頭 -->
+      <ellipse cx="91" cy="56" rx="14" ry="14" fill="#c8a07a"/>
+      <!-- 頭髮 -->
+      <path d="M77 50 Q82 38 91 36 Q100 38 105 50 Q100 43 91 41 Q82 43 77 50Z" fill="#3a2010"/>
+      <!-- 眼睛 -->
+      <circle cx="86" cy="53" r="1.5" fill="#3a2010"/>
+      <circle cx="96" cy="53" r="1.5" fill="#3a2010"/>
+      <!-- 微笑 -->
+      <path d="M87 60 Q91 63 95 60" stroke="#9a7050" stroke-width="0.8" fill="none" stroke-linecap="round"/>
+    </svg>
+  </div>
+</div>
+
+<!-- 情境對話 -->
+<div class="section-label">情境對話 <span>點擊氣泡展開翻譯</span></div>
+<div class="chat-area">
+
+  <div class="chat-row left">
+    <div class="chat-avatar">🛂</div>
+    <div class="chat-col">
+      <div class="chat-role">海關人員</div>
+      <div class="bubble-card">
+        <details class="chat-bubble">
+          <summary><div class="bubble-body"><ruby>申告<rt>しんこく</rt></ruby>するものはありますか？</div></summary>
+          <div class="bubble-expanded">
+            <span class="tc">有需要申報的東西嗎？</span>
+            海關人員的標準問句。
+          </div>
+        </details>
+        <div class="bubble-foot">
+          <button class="speak-btn" onclick="speak('申告するものはありますか')">🔊</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chat-row right">
+    <div class="chat-avatar">🧳</div>
+    <div class="chat-col">
+      <div class="chat-role">旅客</div>
+      <div class="bubble-card">
+        <details class="chat-bubble">
+          <summary><div class="bubble-body student"><ruby>申告<rt>しんこく</rt></ruby>するものはありません。</div></summary>
+          <div class="bubble-expanded">
+            <span class="tc">我沒有需要申報的東西。</span>
+            一般通關時直接說這句。
+          </div>
+        </details>
+        <div class="bubble-foot">
+          <button class="speak-btn" onclick="speak('申告するものはありません')">🔊</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chat-row left">
+    <div class="chat-avatar">🛂</div>
+    <div class="chat-col">
+      <div class="chat-role">海関人員</div>
+      <div class="bubble-card">
+        <details class="chat-bubble">
+          <summary><div class="bubble-body">バッグの<ruby>中身<rt>なかみ</rt></ruby>を<ruby>見せ<rt>み</rt></ruby>てください。</div></summary>
+          <div class="bubble-expanded">
+            <span class="tc">請讓我看包包裡面。</span>
+            被抽查行李時會聽到。
+          </div>
+        </details>
+        <div class="bubble-foot">
+          <button class="speak-btn" onclick="speak('バッグの中身を見せてください')">🔊</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chat-row right">
+    <div class="chat-avatar">🧳</div>
+    <div class="chat-col">
+      <div class="chat-role">旅客</div>
+      <div class="bubble-card">
+        <details class="chat-bubble">
+          <summary><div class="bubble-body student">これは<ruby>土産<rt>みやげ</rt></ruby>です。<ruby>個人<rt>こじん</rt></ruby>で<ruby>使う<rt>つかう</rt></ruby>ものです。</div></summary>
+          <div class="bubble-expanded">
+            <span class="tc">這是伴手禮。這是個人使用的東西。</span>
+            被問到包包內容物時，兩句連用效果更好。
+          </div>
+        </details>
+        <div class="bubble-foot">
+          <button class="speak-btn" onclick="speak('これは土産です。個人で使うものです')">🔊</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- SENTENCE 1 -->
+<div class="spacer"></div>
+<div class="section-label">句子學習</div>
+
+<div class="sentence-card">
+  <div class="sent-num">SENTENCE 1</div>
+  <div class="sent-reading">しんこく　する　もの　は　ありません</div>
+  <div class="sent-main"><ruby>申告<rt>しんこく</rt></ruby>するものはありません。</div>
+  <div class="sent-chunks">申告するものは・ありません</div>
+  <div class="sent-meaning">
+    我沒有需要申報的東西。
+    <div class="sent-note">過海關時最常用的一句，直接說給海關人員聽。</div>
+  </div>
+  <div class="speak-row">
+    <button class="speak-btn" onclick="speak('申告するものはありません')">🔊</button>
+  </div>
+</div>
+
+<!-- SENTENCE 2 -->
+<div class="sentence-card">
+  <div class="sent-num">SENTENCE 2</div>
+  <div class="sent-reading">これ　は　みやげ　です</div>
+  <div class="sent-main">これは<ruby>土産<rt>みやげ</rt></ruby>です。</div>
+  <div class="sent-chunks">これは・土産です</div>
+  <div class="sent-meaning">
+    這是伴手禮。
+    <div class="sent-note">被問到包包裡有什麼東西時，說明是禮品、不是商業用途。</div>
+  </div>
+  <div class="speak-row">
+    <button class="speak-btn" onclick="speak('これは土産です')">🔊</button>
+  </div>
+</div>
+
+<!-- SENTENCE 3 -->
+<div class="sentence-card">
+  <div class="sent-num">SENTENCE 3</div>
+  <div class="sent-reading">こじん　で　つかう　もの　です</div>
+  <div class="sent-main"><ruby>個人<rt>こじん</rt></ruby>で<ruby>使う<rt>つかう</rt></ruby>ものです。</div>
+  <div class="sent-chunks">個人で・使うものです</div>
+  <div class="sent-meaning">
+    這是個人使用的東西。
+    <div class="sent-note">帶了多件同款商品，或被懷疑是商業進口時使用。</div>
+  </div>
+  <div class="speak-row">
+    <button class="speak-btn" onclick="speak('個人で使うものです')">🔊</button>
+  </div>
+</div>
+
+<!-- 文法メモ：で（手段・方法）-->
+<div class="grammar-card">
+  <div class="grammar-title">📗 文法メモ　で的用法：手段・方法</div>
+  <div class="grammar-pattern">＿＿<span class="hl">で</span>〜する　＝　以⋯⋯的方式來做</div>
+  <table class="grammar-table">
+    <tr>
+      <td><ruby>個人<rt>こじん</rt></ruby><span class="g-hl">で</span><ruby>使う<rt>つかう</rt></ruby></td>
+      <td>以個人身分使用</td>
+    </tr>
+    <tr>
+      <td>バス<span class="g-hl">で</span><ruby>行く<rt>いく</rt></ruby></td>
+      <td>搭巴士去</td>
+    </tr>
+    <tr>
+      <td><ruby>日本語<rt>にほんご</rt></ruby><span class="g-hl">で</span><ruby>話す<rt>はなす</rt></ruby></td>
+      <td>用日文說</td>
+    </tr>
+  </table>
+</div>
+
+<!-- 生字卡 -->
+<div class="section-label">互動生字卡 <span>點擊展開例句</span></div>
+<div class="vocab-list">
+
+  <details class="vocab-card">
+    <summary>
+      <div>
+        <span class="vocab-reading">しんこく</span>
+        <span class="vocab-kanji">申告</span>
+      </div>
+      <div class="vocab-pitch">0️⃣</div>
+    </summary>
+    <div class="vocab-detail">
+      <div class="vocab-meaning">申報（向官方機關）</div>
+      <div class="vocab-ex">
+        <span class="ex-jp"><ruby>税関<rt>ぜいかん</rt></ruby>で<ruby>申告<rt>しんこく</rt></ruby>します。</span>
+        <span class="ex-tc">在海關辦理申報。</span>
+        <div class="ex-speak-row">
+          <button class="speak-btn" onclick="speak('税関で申告します')">🔊</button>
+        </div>
+      </div>
+      <div class="vocab-ex">
+        <span class="ex-jp"><ruby>申告<rt>しんこく</rt></ruby>するものはありません。</span>
+        <span class="ex-tc">我沒有需要申報的東西。</span>
+        <div class="ex-speak-row">
+          <button class="speak-btn" onclick="speak('申告するものはありません')">🔊</button>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <details class="vocab-card">
+    <summary>
+      <div>
+        <span class="vocab-reading">みやげ</span>
+        <span class="vocab-kanji">土産</span>
+      </div>
+      <div class="vocab-pitch">2️⃣</div>
+    </summary>
+    <div class="vocab-detail">
+      <div class="vocab-meaning">伴手禮</div>
+      <div class="vocab-ex">
+        <span class="ex-jp">これは<ruby>土産<rt>みやげ</rt></ruby>です。</span>
+        <span class="ex-tc">這是伴手禮。</span>
+        <div class="ex-speak-row">
+          <button class="speak-btn" onclick="speak('これは土産です')">🔊</button>
+        </div>
+      </div>
+      <div class="vocab-ex">
+        <span class="ex-jp"><ruby>日本<rt>にほん</rt></ruby>の<ruby>土産<rt>みやげ</rt></ruby>を<ruby>買い<rt>か</rt></ruby>ました。</span>
+        <span class="ex-tc">買了日本的伴手禮。</span>
+        <div class="ex-speak-row">
+          <button class="speak-btn" onclick="speak('日本の土産を買いました')">🔊</button>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <details class="vocab-card">
+    <summary>
+      <div>
+        <span class="vocab-reading">こじん</span>
+        <span class="vocab-kanji">個人</span>
+      </div>
+      <div class="vocab-pitch">0️⃣</div>
+    </summary>
+    <div class="vocab-detail">
+      <div class="vocab-meaning">個人</div>
+      <div class="vocab-ex">
+        <span class="ex-jp"><ruby>個人<rt>こじん</rt></ruby>で<ruby>使う<rt>つかう</rt></ruby>ものです。</span>
+        <span class="ex-tc">這是個人使用的東西。</span>
+        <div class="ex-speak-row">
+          <button class="speak-btn" onclick="speak('個人で使うものです')">🔊</button>
+        </div>
+      </div>
+      <div class="vocab-ex">
+        <span class="ex-jp"><ruby>個人<rt>こじん</rt></ruby>で<ruby>旅行<rt>りょこう</rt></ruby>しています。</span>
+        <span class="ex-tc">我是個人旅行。</span>
+        <div class="ex-speak-row">
+          <button class="speak-btn" onclick="speak('個人で旅行しています')">🔊</button>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <details class="vocab-card">
+    <summary>
+      <div>
+        <span class="vocab-reading">つかう</span>
+        <span class="vocab-kanji">使う</span>
+      </div>
+      <div class="vocab-pitch">0️⃣</div>
+    </summary>
+    <div class="vocab-detail">
+      <div class="vocab-meaning">使用</div>
+      <div class="vocab-ex">
+        <span class="ex-jp"><ruby>個人<rt>こじん</rt></ruby>で<ruby>使う<rt>つかう</rt></ruby>ものです。</span>
+        <span class="ex-tc">這是個人使用的東西。</span>
+        <div class="ex-speak-row">
+          <button class="speak-btn" onclick="speak('個人で使うものです')">🔊</button>
+        </div>
+      </div>
+      <div class="vocab-ex">
+        <span class="ex-jp">これは<ruby>毎日<rt>まいにち</rt></ruby><ruby>使います<rt>つかいます</rt></ruby>。</span>
+        <span class="ex-tc">這個每天都在用。</span>
+        <div class="ex-speak-row">
+          <button class="speak-btn" onclick="speak('これは毎日使います')">🔊</button>
+        </div>
+      </div>
+    </div>
+  </details>
+
+</div>
+
+<!-- 練習題 -->
+<div class="section-label">互動練習 <span>先想，再點開答案</span></div>
+<div class="practice-list">
+
+  <details class="practice-item">
+    <summary>
+      <span class="q-num">Q1</span>
+      海關人員問你有沒有申報物品，你要怎麼回？
+    </summary>
+    <div class="ans-body">
+      <span class="ans-label">答案</span>
+      <div class="ans-jp"><ruby>申告<rt>しんこく</rt></ruby>するものはありません。</div>
+      <div class="ans-tc">「申告する＋もの＋は＋ありません」，固定組合，直接記住。</div>
+      <div class="speak-row">
+        <button class="speak-btn" onclick="speak('申告するものはありません')">🔊</button>
+      </div>
+    </div>
+  </details>
+
+  <details class="practice-item">
+    <summary>
+      <span class="q-num">Q2</span>
+      被問包包裡的東西是什麼，你說「這是伴手禮」。
+    </summary>
+    <div class="ans-body">
+      <span class="ans-label">答案</span>
+      <div class="ans-jp">これは<ruby>土産<rt>みやげ</rt></ruby>です。</div>
+      <div class="ans-tc">「これは＋名詞＋です」，最基本的句型。土産唸 みやげ，不是 どさん。</div>
+      <div class="speak-row">
+        <button class="speak-btn" onclick="speak('これは土産です')">🔊</button>
+      </div>
+    </div>
+  </details>
+
+  <details class="practice-item">
+    <summary>
+      <span class="q-num">Q3</span>
+      海關懷疑你帶太多同款，你說「這是個人使用的東西」。
+    </summary>
+    <div class="ans-body">
+      <span class="ans-label">答案</span>
+      <div class="ans-jp"><ruby>個人<rt>こじん</rt></ruby>で<ruby>使う<rt>つかう</rt></ruby>ものです。</div>
+      <div class="ans-tc">「個人で」是關鍵，で表示手段／身分。說這句等於告訴對方：自用，不是商業進口。</div>
+      <div class="speak-row">
+        <button class="speak-btn" onclick="speak('個人で使うものです')">🔊</button>
+      </div>
+    </div>
+  </details>
+
+</div>
+
+<div class="page-footer">
+  田中慶介日語課　DAY 2　海關申報<br>
+  🔊 發音由瀏覽器日語語音引擎提供，建議使用 Safari
+</div>
+
+<script>
+function speak(text) {
+  if (!('speechSynthesis' in window)) {
+    alert('請使用 Safari 瀏覽器以啟用發音功能。');
+    return;
+  }
+  window.speechSynthesis.cancel();
+  var utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'ja-JP';
+  utter.rate = 1.0;
+  utter.pitch = 1.0;
+  var voices = window.speechSynthesis.getVoices();
+  var jaVoice = voices.find(function(v){ return v.lang === 'ja-JP'; })
+             || voices.find(function(v){ return v.lang.startsWith('ja'); });
+  if (jaVoice) utter.voice = jaVoice;
+  window.speechSynthesis.speak(utter);
+}
+if ('speechSynthesis' in window) {
+  window.speechSynthesis.onvoiceschanged = function() { window.speechSynthesis.getVoices(); };
+  window.speechSynthesis.getVoices();
+}
+</script>
+
+</body>
+</html>
