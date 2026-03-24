@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>田中慶介日語課 DAY1 入港問候</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Noto+Sans+TC:wght@400;700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #f0f3f8;
+  --card: #ffffff;
+  --border: #dde2ea;
+  --text: #1a2332;
+  --sub: #5a6a7d;
+  --accent: #2d5fa0;
+  --accent-light: #e4ecf8;
+  --green-light: #e4f2eb;
+  --green-dark: #1a3a2a;
+  --gray-bubble: #eceef2;
+  --ruby: #2d5fa0;
+  --grammar: #2d6a4f;
+  --grammar-light: #e4f2eb;
+  --shadow: 0 2px 10px rgba(0,0,0,0.07);
+}
+
+body {
+  font-family: 'Noto Sans TC', 'Noto Sans JP', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  padding: 0 0 52px;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+ruby rt { font-size: 10px; color: var(--ruby); font-weight: 400; }
+
+/* ── Header ── */
+.page-header {
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  padding: 18px 18px 16px;
+}
+.page-tag {
+  display: inline-flex;
+  align-items: center;
+  font-size: 12px;
+  color: var(--sub);
+  background: var(--accent-light);
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.page-header h1 { font-size: 26px; font-weight: 900; color: var(--text); }
+.page-header p { font-size: 14px; color: var(--sub); margin-top: 5px; }
+
+/* ── Section label ── */
+.section-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 16px 8px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+}
+.section-label span { font-size: 12px; color: var(--sub); font-weight: 400; }
+
+/* ── Scene ── */
+.scene-card {
+  margin: 0 12px 4px;
+  background: var(--card);
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+.scene-svg-wrap {
+  background: linear-gradient(180deg, #cddff5 0%, #e8f0fa 100%);
+  padding: 20px 16px 16px;
+}
+.scene-svg { width: 100%; display: block; }
+
+/* ── Chat bubbles ── */
+.chat-area {
+  padding: 0 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.chat-row { display: flex; align-items: flex-end; gap: 10px; }
+.chat-row.right { flex-direction: row-reverse; }
+.chat-avatar {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+  border: 2px solid var(--border);
+  background: var(--card);
+}
+.chat-col { display: flex; flex-direction: column; max-width: 78%; gap: 4px; }
+.chat-row.right .chat-col { align-items: flex-end; }
+.chat-role { font-size: 12px; color: var(--sub); font-weight: 700; padding: 0 4px; }
+
+.bubble-card {
+  background: var(--card);
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  width: 100%;
+}
+details.chat-bubble summary {
+  list-style: none;
+  cursor: pointer;
+  user-select: none;
+}
+details.chat-bubble summary::-webkit-details-marker { display: none; }
+.bubble-body {
+  padding: 13px 17px;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: var(--text);
+  background: var(--gray-bubble);
+}
+.bubble-body.student {
+  background: var(--green-light);
+  color: var(--green-dark);
+}
+.bubble-expanded {
+  padding: 10px 17px 14px;
+  font-size: 15px;
+  color: var(--sub);
+  line-height: 1.7;
+  border-top: 1px solid var(--border);
+}
+.bubble-expanded .tc {
+  display: block;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+  font-family: 'Noto Sans TC', sans-serif;
+}
+
+/* ── Sentence cards ── */
+.sentence-card {
+  margin: 6px 12px;
+  background: var(--card);
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  padding: 16px 18px 18px;
+}
+.sent-num {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+.sent-reading {
+  font-size: 13px;
+  color: var(--ruby);
+  font-family: 'Noto Sans JP', sans-serif;
+  letter-spacing: 2px;
+  margin-bottom: 4px;
+  min-height: 20px;
+}
+.sent-main {
+  font-size: 30px;
+  font-weight: 900;
+  font-family: 'Noto Sans JP', sans-serif;
+  color: var(--text);
+  line-height: 1.4;
+  margin-bottom: 10px;
+}
+.sent-chunks {
+  font-size: 14px;
+  color: var(--sub);
+  font-family: 'Noto Sans JP', sans-serif;
+  margin-bottom: 12px;
+  letter-spacing: 0.5px;
+}
+.sent-meaning {
+  background: var(--accent-light);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1.5;
+}
+.sent-note {
+  font-size: 13px;
+  color: var(--sub);
+  font-weight: 400;
+  margin-top: 4px;
+  line-height: 1.6;
+}
+
+/* ── Vocab cards ── */
+.vocab-list { display: flex; flex-direction: column; gap: 8px; padding: 0 12px; }
+details.vocab-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+details.vocab-card summary {
+  list-style: none;
+  padding: 16px 18px;
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+details.vocab-card summary::-webkit-details-marker { display: none; }
+.vocab-reading { font-size: 12px; color: var(--sub); font-family: 'Noto Sans JP', sans-serif; display: block; margin-bottom: 4px; }
+.vocab-kanji { font-size: 22px; font-weight: 700; font-family: 'Noto Sans JP', sans-serif; color: var(--text); }
+.vocab-pitch {
+  margin-left: auto;
+  background: var(--accent-light);
+  border-radius: 8px;
+  width: 30px; height: 30px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; font-weight: 700;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+.vocab-detail {
+  padding: 2px 18px 18px;
+  border-top: 1px solid var(--border);
+}
+.vocab-meaning {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 10px;
+  padding-top: 12px;
+  font-family: 'Noto Sans TC', sans-serif;
+}
+.vocab-ex {
+  margin-bottom: 8px;
+  padding: 10px 12px;
+  background: var(--bg);
+  border-radius: 10px;
+  border-left: 3px solid var(--accent);
+}
+.vocab-ex .ex-jp {
+  font-size: 16px;
+  font-weight: 700;
+  font-family: 'Noto Sans JP', sans-serif;
+  color: var(--text);
+  display: block;
+  margin-bottom: 4px;
+  line-height: 1.5;
+}
+.vocab-ex .ex-tc {
+  font-size: 13px;
+  color: var(--sub);
+  display: block;
+}
+
+/* ── Grammar memo ── */
+.grammar-card {
+  margin: 6px 12px;
+  background: var(--grammar-light);
+  border: 1px solid #a8d4b8;
+  border-radius: 16px;
+  padding: 16px 18px;
+  box-shadow: var(--shadow);
+}
+.grammar-title { font-size: 13px; font-weight: 700; letter-spacing: 1px; color: var(--grammar); margin-bottom: 10px; }
+.grammar-pattern {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 16px; font-weight: 700;
+  color: var(--text); margin-bottom: 14px; line-height: 1.6;
+}
+.grammar-pattern .hl { background: var(--grammar); color: #fff; padding: 2px 6px; border-radius: 5px; }
+.grammar-table { width: 100%; border-collapse: collapse; font-size: 15px; }
+.grammar-table tr { border-bottom: 1px solid #b8d8c4; }
+.grammar-table tr:last-child { border-bottom: none; }
+.grammar-table td { padding: 9px 4px; font-family: 'Noto Sans JP', sans-serif; }
+.grammar-table td:last-child { color: var(--sub); font-family: 'Noto Sans TC', sans-serif; text-align: right; }
+.g-hl { background: var(--grammar); color: #fff; padding: 0 4px; border-radius: 3px; font-weight: 700; }
+
+/* ── Practice ── */
+.practice-list { display: flex; flex-direction: column; gap: 8px; padding: 0 12px; }
+details.practice-item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+details.practice-item summary {
+  list-style: none;
+  padding: 16px 18px;
+  cursor: pointer;
+  user-select: none;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.6;
+}
+details.practice-item summary::-webkit-details-marker { display: none; }
+.q-num { font-size: 11px; font-weight: 700; color: var(--accent); letter-spacing: 1px; display: block; margin-bottom: 6px; }
+.ans-body { padding: 2px 18px 18px; border-top: 1px solid var(--border); }
+.ans-label { font-size: 11px; font-weight: 700; color: var(--grammar); letter-spacing: 1px; display: block; padding-top: 14px; margin-bottom: 8px; }
+.ans-jp { font-size: 22px; font-weight: 900; font-family: 'Noto Sans JP', sans-serif; color: var(--text); margin-bottom: 6px; line-height: 1.5; }
+.ans-tc { font-size: 14px; color: var(--sub); line-height: 1.7; }
+
+/* ── Footer ── */
+.page-footer {
+  margin: 24px 12px 0;
+  padding: 16px 18px;
+  background: var(--card);
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  font-size: 12px; color: var(--sub);
+  line-height: 1.7; text-align: center;
+}
+
+.spacer { height: 8px; }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="page-header">
+  <div class="page-tag">田中慶介日語課 ｜ DAY1 手機相容版</div>
+  <h1>入港問候</h1>
+  <p>入港篇：基本打招呼・道謝・表達拜託</p>
+</div>
+
+<!-- Scene -->
+<div class="section-label">場景插圖</div>
+<div class="scene-card">
+  <div class="scene-svg-wrap">
+    <svg class="scene-svg" viewBox="0 0 360 160" xmlns="http://www.w3.org/2000/svg">
+      <!-- Sky -->
+      <rect width="360" height="160" fill="#cddff5"/>
+      <!-- Sea -->
+      <rect x="0" y="108" width="360" height="52" fill="#5a9abf"/>
+      <rect x="0" y="106" width="360" height="6" fill="#4a8aaf" opacity="0.6"/>
+      <!-- Waves -->
+      <path d="M0 118 Q30 113 60 118 Q90 123 120 118 Q150 113 180 118 Q210 123 240 118 Q270 113 300 118 Q330 123 360 118" stroke="#7ab8d8" stroke-width="2" fill="none" opacity="0.7"/>
+      <path d="M0 130 Q40 125 80 130 Q120 135 160 130 Q200 125 240 130 Q300 135 360 130" stroke="#7ab8d8" stroke-width="1.5" fill="none" opacity="0.5"/>
+      <!-- Dock -->
+      <rect x="0" y="100" width="360" height="12" fill="#c4a97a"/>
+      <rect x="0" y="98" width="360" height="4" fill="#b89860"/>
+      <rect x="30" y="80" width="8" height="22" rx="2" fill="#a08050"/>
+      <rect x="100" y="80" width="8" height="22" rx="2" fill="#a08050"/>
+      <rect x="170" y="80" width="8" height="22" rx="2" fill="#a08050"/>
+      <rect x="240" y="80" width="8" height="22" rx="2" fill="#a08050"/>
+      <rect x="310" y="80" width="8" height="22" rx="2" fill="#a08050"/>
+      <!-- Ship hull -->
+      <rect x="60" y="60" width="240" height="45" rx="6" fill="#f0f0f0"/>
+      <rect x="55" y="98" width="250" height="10" rx="4" fill="#d44"/>
+      <rect x="80" y="40" width="160" height="24" rx="4" fill="#e8e8e8"/>
+      <rect x="110" y="22" width="60" height="20" rx="3" fill="#ddd"/>
+      <!-- Funnel -->
+      <rect x="148" y="12" width="24" height="18" rx="3" fill="#cc3333"/>
+      <rect x="152" y="8" width="16" height="6" rx="2" fill="#aa2222"/>
+      <!-- Ship windows -->
+      <circle cx="100" cy="75" r="6" fill="#b0d4f0" opacity="0.9"/>
+      <circle cx="130" cy="75" r="6" fill="#b0d4f0" opacity="0.9"/>
+      <circle cx="160" cy="75" r="6" fill="#b0d4f0" opacity="0.9"/>
+      <circle cx="190" cy="75" r="6" fill="#b0d4f0" opacity="0.9"/>
+      <circle cx="220" cy="75" r="6" fill="#b0d4f0" opacity="0.9"/>
+      <circle cx="250" cy="75" r="6" fill="#b0d4f0" opacity="0.9"/>
+      <!-- Port staff (left) -->
+      <circle cx="42" cy="68" r="10" fill="#f5cba7"/>
+      <rect cx="42" cy="68" x="32" y="58" width="20" height="8" rx="4" fill="#1a3a6a"/>
+      <rect x="33" y="78" width="18" height="24" rx="5" fill="#2d5fa0"/>
+      <line x1="33" y1="90" x2="22" y2="96" stroke="#f5cba7" stroke-width="5" stroke-linecap="round"/>
+      <line x1="51" y1="90" x2="60" y2="96" stroke="#f5cba7" stroke-width="5" stroke-linecap="round"/>
+      <rect x="35" y="102" width="8" height="18" rx="3" fill="#1a3a6a"/>
+      <rect x="46" y="102" width="8" height="18" rx="3" fill="#1a3a6a"/>
+      <!-- Traveller (right) -->
+      <circle cx="318" cy="64" r="12" fill="#f5cba7"/>
+      <rect x="308" y="52" width="22" height="9" rx="5" fill="#4a2e10"/>
+      <rect x="306" y="76" width="24" height="28" rx="7" fill="#3a7ca5"/>
+      <line x1="306" y1="88" x2="293" y2="96" stroke="#f5cba7" stroke-width="5" stroke-linecap="round"/>
+      <line x1="330" y1="88" x2="336" y2="96" stroke="#f5cba7" stroke-width="5" stroke-linecap="round"/>
+      <!-- Luggage -->
+      <rect x="333" y="90" width="18" height="22" rx="4" fill="#e8a020"/>
+      <rect x="338" y="87" width="8" height="5" rx="2" fill="#c88010"/>
+      <line x1="333" y1="101" x2="351" y2="101" stroke="#c88010" stroke-width="1.5"/>
+      <!-- Wave detail -->
+      <ellipse cx="160" cy="140" rx="80" ry="6" fill="#4a8aaf" opacity="0.3"/>
+    </svg>
+  </div>
+</div>
+
+<!-- Dialogue -->
+<div class="section-label">情境對話 <span>點擊氣泡展開翻譯</span></div>
+<div class="chat-area">
+
+  <div class="chat-row left">
+    <div class="chat-avatar">🧢</div>
+    <div class="chat-col">
+      <div class="chat-role">港口人員</div>
+      <div class="bubble-card">
+        <details class="chat-bubble">
+          <summary><div class="bubble-body">こんにちは！</div></summary>
+          <div class="bubble-expanded">
+            <span class="tc">你好！</span>
+            白天通用的問候語。
+          </div>
+        </details>
+      </div>
+    </div>
+  </div>
+
+  <div class="chat-row right">
+    <div class="chat-avatar">🧳</div>
+    <div class="chat-col">
+      <div class="chat-role">旅客</div>
+      <div class="bubble-card">
+        <details class="chat-bubble">
+          <summary><div class="bubble-body student">こんにちは。よろしくお願いします。</div></summary>
+          <div class="bubble-expanded">
+            <span class="tc">你好。請多關照。</span>
+            打招呼後直接接「よろしくお願いします」，自然又有禮貌。
+          </div>
+        </details>
+      </div>
+    </div>
+  </div>
+
+  <div class="chat-row left">
+    <div class="chat-avatar">🧢</div>
+    <div class="chat-col">
+      <div class="chat-role">港口人員</div>
+      <div class="bubble-card">
+        <details class="chat-bubble">
+          <summary><div class="bubble-body">こちらへどうぞ。</div></summary>
+          <div class="bubble-expanded">
+            <span class="tc">請往這邊走。</span>
+            帶路時常說的話，跟著走就對了。
+          </div>
+        </details>
+      </div>
+    </div>
+  </div>
+
+  <div class="chat-row right">
+    <div class="chat-avatar">🧳</div>
+    <div class="chat-col">
+      <div class="chat-role">旅客</div>
+      <div class="bubble-card">
+        <details class="chat-bubble">
+          <summary><div class="bubble-body student">ありがとうございます。</div></summary>
+          <div class="bubble-expanded">
+            <span class="tc">謝謝你。</span>
+            正式道謝。輕鬆版可說「ありがとう」。
+          </div>
+        </details>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Sentences -->
+<div class="spacer"></div>
+<div class="section-label">句子學習</div>
+
+<div class="sentence-card">
+  <div class="sent-num">SENTENCE 1</div>
+  <div class="sent-reading">こんにちは</div>
+  <div class="sent-main">こんにちは。</div>
+  <div class="sent-chunks">こん・にち・は</div>
+  <div class="sent-meaning">
+    你好。
+    <div class="sent-note">白天（約早上10點～下午5點）使用。早上說「おはようございます」，傍晚後說「こんばんは」。</div>
+  </div>
+</div>
+
+<div class="sentence-card">
+  <div class="sent-num">SENTENCE 2</div>
+  <div class="sent-reading">おねがい</div>
+  <div class="sent-main">よろしくお願いします。</div>
+  <div class="sent-chunks">よろしく・おねがい・します</div>
+  <div class="sent-meaning">
+    請多關照。／麻煩你了。
+    <div class="sent-note">初次見面、拜託對方幫忙，甚至搭計程車上車時都能用。郵輪旅遊全程超高頻句。</div>
+  </div>
+</div>
+
+<div class="sentence-card">
+  <div class="sent-num">SENTENCE 3</div>
+  <div class="sent-reading">　</div>
+  <div class="sent-main">ありがとうございます。</div>
+  <div class="sent-chunks">ありがとう・ございます</div>
+  <div class="sent-meaning">
+    謝謝你。
+    <div class="sent-note">正式場合用完整版。朋友之間可說「ありがとう」。收到東西、得到幫助都用這句。</div>
+  </div>
+</div>
+
+<!-- Vocab -->
+<div class="section-label">互動生字卡 <span>點擊展開例句</span></div>
+<div class="vocab-list">
+
+  <details class="vocab-card">
+    <summary>
+      <div>
+        <span class="vocab-reading">おねがい</span>
+        <span class="vocab-kanji">お願い</span>
+      </div>
+      <div class="vocab-pitch">0</div>
+    </summary>
+    <div class="vocab-detail">
+      <div class="vocab-meaning">請求、拜託</div>
+      <div class="vocab-ex">
+        <span class="ex-jp">よろしくお願いします。</span>
+        <span class="ex-tc">請多關照。</span>
+      </div>
+      <div class="vocab-ex">
+        <span class="ex-jp"><ruby>那覇空港<rt>なはくうこう</rt></ruby>まで、お願いします。</span>
+        <span class="ex-tc">到那霸機場，麻煩你。（計程車用語，Day3 會學到）</span>
+      </div>
+    </div>
+  </details>
+
+  <details class="vocab-card">
+    <summary>
+      <div>
+        <span class="vocab-reading">純假名</span>
+        <span class="vocab-kanji">ございます</span>
+      </div>
+      <div class="vocab-pitch">3</div>
+    </summary>
+    <div class="vocab-detail">
+      <div class="vocab-meaning">禮貌語尾（表示「是／有」的鄭重說法）</div>
+      <div class="vocab-ex">
+        <span class="ex-jp">ありがとうございます。</span>
+        <span class="ex-tc">謝謝你。</span>
+      </div>
+      <div class="vocab-ex">
+        <span class="ex-jp">おはようございます。</span>
+        <span class="ex-tc">早安。</span>
+      </div>
+    </div>
+  </details>
+
+  <details class="vocab-card">
+    <summary>
+      <div>
+        <span class="vocab-reading">純假名</span>
+        <span class="vocab-kanji">よろしく</span>
+      </div>
+      <div class="vocab-pitch">0</div>
+    </summary>
+    <div class="vocab-detail">
+      <div class="vocab-meaning">請多關照、拜託</div>
+      <div class="vocab-ex">
+        <span class="ex-jp">よろしくお願いします。</span>
+        <span class="ex-tc">請多關照。（正式）</span>
+      </div>
+      <div class="vocab-ex">
+        <span class="ex-jp">よろしく！</span>
+        <span class="ex-tc">麻煩你了！（輕鬆版）</span>
+      </div>
+    </div>
+  </details>
+
+</div>
+
+<!-- Practice -->
+<div class="section-label">互動練習 <span>先想，再點開答案</span></div>
+<div class="practice-list">
+
+  <details class="practice-item">
+    <summary>
+      <span class="q-num">Q1</span>
+      下船後遇到港口工作人員向你打招呼，你要怎麼回應並表示「請多關照」？
+    </summary>
+    <div class="ans-body">
+      <span class="ans-label">答案</span>
+      <div class="ans-jp">こんにちは。よろしくお願いします。</div>
+      <div class="ans-tc">先回應問候，再接「よろしくお願いします」，一氣呵成。</div>
+    </div>
+  </details>
+
+  <details class="practice-item">
+    <summary>
+      <span class="q-num">Q2</span>
+      工作人員幫你拿了行李，你要怎麼道謝？
+    </summary>
+    <div class="ans-body">
+      <span class="ans-label">答案</span>
+      <div class="ans-jp">ありがとうございます。</div>
+      <div class="ans-tc">正式場合一律用「ございます」版，不會出錯。</div>
+    </div>
+  </details>
+
+  <details class="practice-item">
+    <summary>
+      <span class="q-num">Q3</span>
+      把這三句日文翻成中文：こんにちは／ありがとう／よろしく
+    </summary>
+    <div class="ans-body">
+      <span class="ans-label">答案</span>
+      <div class="ans-jp">你好 ／ 謝謝 ／ 拜託了</div>
+      <div class="ans-tc">這三句是正式版的輕鬆說法，熟人之間使用。正式場合加上「ございます」或「お願いします」。</div>
+    </div>
+  </details>
+
+</div>
+
+<div class="page-footer">
+  使用原生 &lt;details&gt;/&lt;summary&gt; 互動，免 JavaScript<br>
+  手機瀏覽器、LINE 內建瀏覽器皆可正常點擊
+</div>
+
+</body>
+</html>
