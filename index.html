@@ -151,6 +151,20 @@ body {
 }
 .day-check { font-size: 0; }
 .day-card.done .day-check { font-size: 14px; }
+
+.ho-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent);
+  background: var(--accent-light);
+  border-radius: 8px;
+  padding: 3px 8px;
+  text-decoration: none;
+}
 </style>
 </head>
 <body>
@@ -213,6 +227,7 @@ body {
       <div class="day-title">問路</div>
       <div class="day-check">✓</div>
     </div>
+    <a class="ho-link" href="day5_ho.html" onclick="event.stopPropagation()">📦 補充：方向詞</a>
   </a>
 
   <div class="day-card locked">

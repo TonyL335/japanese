@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>田中慶介日語課 DAY5 補充｜方向詞</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Noto+Sans+TC:wght@400;700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #f0f3f8;
+  --card: #ffffff;
+  --border: #dde2ea;
+  --text: #1a2332;
+  --sub: #5a6a7d;
+  --accent: #2d5fa0;
+  --accent-light: #e4ecf8;
+  --green-light: #e4f2eb;
+  --green-dark: #1a3a2a;
+  --ruby: #2d5fa0;
+  --grammar: #2d6a4f;
+  --grammar-light: #e4f2eb;
+  --shadow: 0 2px 10px rgba(0,0,0,0.07);
+  --speak-bg: #f0ece4;
+  --speak-bg-active: #e0dbd0;
+  --speak-size: 34px;
+}
+
+body {
+  font-family: 'Noto Sans TC', 'Noto Sans JP', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  padding: 0 0 52px;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+ruby rt { font-size: 10px; color: var(--ruby); font-weight: 400; }
+
+.speak-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--speak-size);
+  height: var(--speak-size);
+  border-radius: 50%;
+  background: var(--speak-bg);
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  line-height: 1;
+  flex-shrink: 0;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.15s, transform 0.1s, box-shadow 0.15s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.18);
+}
+.speak-btn:active { transform: scale(0.92); background: var(--speak-bg-active); }
+
+.page-header {
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  padding: 18px 18px 16px;
+}
+.page-tag {
+  display: inline-flex;
+  align-items: center;
+  font-size: 12px;
+  color: var(--sub);
+  background: var(--accent-light);
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.page-header h1 { font-size: 24px; font-weight: 900; color: var(--text); }
+.page-header p { font-size: 14px; color: var(--sub); margin-top: 5px; }
+
+.section-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 16px 8px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+}
+.section-label span { font-size: 12px; color: var(--sub); font-weight: 400; }
+
+/* ── 方向示意圖 ── */
+.dir-card {
+  margin: 0 12px 4px;
+  background: var(--card);
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  padding: 20px 16px;
+}
+.dir-svg { width: 100%; display: block; }
+
+/* ── 詞卡列表 ── */
+.vocab-list { display: flex; flex-direction: column; gap: 8px; padding: 0 12px; }
+
+details.vocab-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+details.vocab-card summary {
+  list-style: none;
+  padding: 14px 18px;
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+details.vocab-card summary::-webkit-details-marker { display: none; }
+
+.vocab-jp {
+  font-size: 22px;
+  font-weight: 700;
+  font-family: 'Noto Sans JP', sans-serif;
+  color: var(--text);
+  line-height: 1.9;
+  flex: 1;
+}
+.vocab-reading-small {
+  font-size: 11px;
+  color: var(--sub);
+  font-family: 'Noto Sans JP', sans-serif;
+  display: block;
+  margin-bottom: 2px;
+}
+.vocab-pitch {
+  background: var(--accent-light);
+  border-radius: 8px;
+  width: 30px; height: 30px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 700;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+.vocab-meaning-badge {
+  font-size: 13px;
+  color: var(--sub);
+  font-family: 'Noto Sans TC', sans-serif;
+  flex-shrink: 0;
+}
+
+.vocab-detail {
+  padding: 2px 18px 16px;
+  border-top: 1px solid var(--border);
+}
+.vocab-meaning-full {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  padding-top: 12px;
+  margin-bottom: 10px;
+  font-family: 'Noto Sans TC', sans-serif;
+}
+.vocab-ex {
+  margin-bottom: 8px;
+  padding: 10px 12px 12px;
+  background: var(--bg);
+  border-radius: 10px;
+  border-left: 3px solid var(--accent);
+}
+.vocab-ex .ex-jp {
+  font-size: 16px;
+  font-weight: 700;
+  font-family: 'Noto Sans JP', sans-serif;
+  color: var(--text);
+  display: block;
+  margin-bottom: 4px;
+  line-height: 1.9;
+}
+.vocab-ex .ex-tc {
+  font-size: 13px;
+  color: var(--sub);
+  display: block;
+}
+.ex-speak-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+/* ── 頭尾按鈕行 ── */
+.speak-inline {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+}
+
+.page-footer {
+  margin: 24px 12px 0;
+  padding: 16px 18px;
+  background: var(--card);
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  font-size: 12px; color: var(--sub);
+  line-height: 1.7; text-align: center;
+}
+.spacer { height: 8px; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="page-tag">田中慶介日語課 ｜ DAY5 補充詞卡</div>
+  <h1>📦 方向詞</h1>
+  <p>問路必備・<ruby>右<rt>みぎ</rt></ruby>・<ruby>左<rt>ひだり</rt></ruby>・まっすぐ</p>
+</div>
+
+<!-- 方向示意圖 -->
+<div class="section-label">方向示意圖</div>
+<div class="dir-card">
+  <svg class="dir-svg" viewBox="0 0 320 300" xmlns="http://www.w3.org/2000/svg">
+
+    <!-- 背景 -->
+    <rect width="320" height="300" fill="#f8f9fb" rx="12"/>
+
+    <!-- 十字路口地面 -->
+    <rect x="120" y="0" width="80" height="300" fill="#dde2ea"/>
+    <rect x="0" y="110" width="320" height="80" fill="#dde2ea"/>
+    <!-- 路面白線 -->
+    <rect x="155" y="0" width="10" height="100" fill="#fff" opacity="0.7" rx="3"/>
+    <rect x="155" y="200" width="10" height="100" fill="#fff" opacity="0.7" rx="3"/>
+    <rect x="0" y="145" width="100" height="10" fill="#fff" opacity="0.7" rx="3"/>
+    <rect x="220" y="145" width="100" height="10" fill="#fff" opacity="0.7" rx="3"/>
+    <!-- 中心圓 -->
+    <circle cx="160" cy="150" r="28" fill="#ffffff" stroke="#b0b8c8" stroke-width="1.5"/>
+
+    <!-- 人物（中心） -->
+    <!-- 身體 -->
+    <rect x="153" y="158" width="14" height="18" fill="#4a7ab5" rx="3"/>
+    <!-- 頭 -->
+    <circle cx="160" cy="152" r="8" fill="#f5c99a"/>
+    <!-- 頭髮 -->
+    <ellipse cx="160" cy="146" rx="8" ry="4" fill="#3a2a1a"/>
+
+    <!-- 上（上）箭頭 -->
+    <g>
+      <line x1="160" y1="120" x2="160" y2="60" stroke="#e8a020" stroke-width="3" stroke-linecap="round"/>
+      <polygon points="160,48 153,64 167,64" fill="#e8a020"/>
+      <rect x="128" y="22" width="64" height="26" fill="#e8a020" rx="8"/>
+      <text x="160" y="40" text-anchor="middle" font-family="Noto Sans JP" font-size="13" font-weight="700" fill="white">うえ／上</text>
+    </g>
+
+    <!-- 下（下）箭頭 -->
+    <g>
+      <line x1="160" y1="182" x2="160" y2="238" stroke="#8e44ad" stroke-width="3" stroke-linecap="round"/>
+      <polygon points="160,250 153,234 167,234" fill="#8e44ad"/>
+      <rect x="120" y="252" width="80" height="26" fill="#8e44ad" rx="8"/>
+      <text x="160" y="270" text-anchor="middle" font-family="Noto Sans JP" font-size="13" font-weight="700" fill="white">した／下</text>
+    </g>
+
+    <!-- 右 (右) 箭頭 -->
+    <g>
+      <line x1="190" y1="150" x2="248" y2="150" stroke="#c0392b" stroke-width="3" stroke-linecap="round"/>
+      <polygon points="260,150 244,143 244,157" fill="#c0392b"/>
+      <rect x="258" y="136" width="54" height="26" fill="#c0392b" rx="8"/>
+      <text x="285" y="154" text-anchor="middle" font-family="Noto Sans JP" font-size="13" font-weight="700" fill="white">みぎ／右</text>
+    </g>
+
+    <!-- 左 (左) 箭頭 — 標籤移至左側外，白字清晰 -->
+    <g>
+      <line x1="130" y1="150" x2="72" y2="150" stroke="#27ae60" stroke-width="3" stroke-linecap="round"/>
+      <polygon points="60,150 76,143 76,157" fill="#27ae60"/>
+      <rect x="2" y="136" width="60" height="26" fill="#27ae60" rx="8"/>
+      <text x="32" y="154" text-anchor="middle" font-family="Noto Sans JP" font-size="12" font-weight="700" fill="white">ひだり／左</text>
+    </g>
+
+    <!-- 前（右上小標） -->
+    <rect x="228" y="54" width="64" height="22" fill="#2d5fa0" rx="6"/>
+    <text x="260" y="70" text-anchor="middle" font-family="Noto Sans JP" font-size="11" font-weight="700" fill="white">まえ／前</text>
+    <line x1="240" y1="76" x2="226" y2="104" stroke="#2d5fa0" stroke-width="1.5" stroke-dasharray="3,3"/>
+
+    <!-- 後ろ（右下小標） -->
+    <rect x="228" y="222" width="64" height="22" fill="#5a6a7d" rx="6"/>
+    <text x="260" y="238" text-anchor="middle" font-family="Noto Sans JP" font-size="11" font-weight="700" fill="white">うしろ／後ろ</text>
+    <line x1="240" y1="222" x2="226" y2="198" stroke="#5a6a7d" stroke-width="1.5" stroke-dasharray="3,3"/>
+
+  </svg>
+</div>
+
+<div class="spacer"></div>
+
+<!-- 詞卡 -->
+<div class="section-label">方向詞卡 <span>點擊展開例句</span></div>
+<div class="vocab-list">
+
+  <!-- まっすぐ -->
+  <details class="vocab-card">
+    <summary>
+      <div style="flex:1">
+        <span class="vocab-reading-small">まっすぐ（純假名）</span>
+        <span class="vocab-jp">まっすぐ</span>
+      </div>
+      <span class="vocab-meaning-badge">直走</span>
+      <div class="vocab-pitch">0</div>
+      <button class="speak-btn" onclick="event.preventDefault();speak('まっすぐ')">🔊</button>
+    </summary>
+    <div class="vocab-detail">
+      <div class="vocab-meaning-full">直走、筆直</div>
+      <div class="vocab-ex">
+        <span class="ex-jp">まっすぐ<ruby>行<rt>い</rt></ruby>くと<ruby>駅<rt>えき</rt></ruby>があります。</span>
+        <span class="ex-tc">直走就有車站。</span>
+        <div class="ex-speak-row">
+          <button class="speak-btn" onclick="speak('まっすぐ行くと駅があります。')">🔊</button>
+        </div>
+      </div>
+      <div class="vocab-ex">
+        <span class="ex-jp">この<ruby>道<rt>みち</rt></ruby>をまっすぐ<ruby>進<rt>すす</rt></ruby>んでください。</span>
+        <span class="ex-tc">請沿這條路直走。</span>
+        <div class="ex-speak-row">
+          <button class="speak-btn" onclick="speak('この道をまっすぐ進んでください。')">🔊</button>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <!-- 右 -->
+  <details class="vocab-card">
+    <summary>
+      <div style="flex:1">
+        <span class="vocab-reading-small"></span>
+        <span class="vocab-jp"><ruby>右<rt>みぎ</rt></ruby></span>
+      </div>
+      <span class="vocab-meaning-badge">右邊</span>
+      <div class="vocab-pitch">0</div>
+      <button class="speak-btn" onclick="event.preventDefault();speak('右')">🔊</button>
+    </summary>
+    <div class="vocab-detail">
+      <div class="vocab-meaning-full">右邊</div>
+      <div class="vocab-ex">
+        <span class="ex-jp"><ruby>角<rt>かど</rt></ruby>を<ruby>右<rt>みぎ</rt></ruby>に<ruby>曲<rt>ま</rt></ruby>がってください。</span>
+        <span class="ex-tc">請在轉角向右轉。</span>
+        <div class="ex-speak-row">
+          <button class="speak-btn" onclick="speak('角を右に曲がってください。')">🔊</button>
+        </div>
+      </div>
+      <div class="vocab-ex">
+        <span class="ex-jp"><ruby>右<rt>みぎ</rt></ruby>にコンビニがあります。</span>
+        <span class="ex-tc">右邊有便利商店。</span>
+        <div class="ex-speak-row">
+          <button class="speak-btn" onclick="speak('右にコンビニがあります。')">🔊</button>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <!-- 左 -->
+  <details class="vocab-card">
+    <summary>
+      <div style="flex:1">
+        <span class="vocab-reading-small"></span>
+        <span class="vocab-jp"><ruby>左<rt>ひだり</rt></ruby></span>
+      </div>
+      <span class="vocab-meaning-badge">左邊</span>
+      <div class="vocab-pitch">0</div>
+      <button class="speak-btn" onclick="event.preventDefault();speak('左')">🔊</button>
+    </summary>
+    <div class="vocab-detail">
+      <div class="vocab-meaning-full">左邊</div>
+      <div class="vocab-ex">
+        <span class="ex-jp"><ruby>信号<rt>しんごう</rt></ruby>を<ruby>左<rt>ひだり</rt></ruby>に<ruby>曲<rt>ま</rt></ruby>がってください。</span>
+        <span class="ex-tc">請在紅綠燈向左轉。</span>
+        <div class="ex-speak-row">
+          <button class="speak-btn" onclick="speak('信号を左に曲がってください。')">🔊</button>
+        </div>
+      </div>
+      <div class="vocab-ex">
+        <span class="ex-jp"><ruby>左<rt>ひだり</rt></ruby>に<ruby>曲<rt>ま</rt></ruby>がると<ruby>港<rt>みなと</rt></ruby>が<ruby>見<rt>み</rt></ruby>えます。</span>
+        <span class="ex-tc">左轉就能看到港口。</span>
+        <div class="ex-speak-row">
+          <button class="speak-btn" onclick="speak('左に曲がると港が見えます。')">🔊</button>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <!-- 前 -->
+  <details class="vocab-card">
+    <summary>
+      <div style="flex:1">
+        <span class="vocab-reading-small"></span>
+        <span class="vocab-jp"><ruby>前<rt>まえ</rt></ruby></span>
+      </div>
+      <span class="vocab-meaning-badge">前面</span>
+      <div class="vocab-pitch">1</div>
+      <button class="speak-btn" onclick="event.preventDefault();speak('前')">🔊</button>
+    </summary>
+    <div class="vocab-detail">
+      <div class="vocab-meaning-full">前面</div>
+      <div class="vocab-ex">
+        <span class="ex-jp"><ruby>駅<rt>えき</rt></ruby>の<ruby>前<rt>まえ</rt></ruby>にバス<ruby>停<rt>てい</rt></ruby>があります。</span>
+        <span class="ex-tc">車站前面有公車站。</span>
+        <div class="ex-speak-row">
+          <button class="speak-btn" onclick="speak('駅の前にバス停があります。')">🔊</button>
+        </div>
+      </div>
+      <div class="vocab-ex">
+        <span class="ex-jp"><ruby>船<rt>ふね</rt></ruby>の<ruby>前<rt>まえ</rt></ruby>で<ruby>写真<rt>しゃしん</rt></ruby>を<ruby>撮<rt>と</rt></ruby>りましょう。</span>
+        <span class="ex-tc">在船的前面拍照吧。</span>
+        <div class="ex-speak-row">
+          <button class="speak-btn" onclick="speak('船の前で写真を撮りましょう。')">🔊</button>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <!-- 後ろ -->
+  <details class="vocab-card">
+    <summary>
+      <div style="flex:1">
+        <span class="vocab-reading-small"></span>
+        <span class="vocab-jp"><ruby>後<rt>うし</rt></ruby>ろ</span>
+      </div>
+      <span class="vocab-meaning-badge">後面</span>
+      <div class="vocab-pitch">0</div>
+      <button class="speak-btn" onclick="event.preventDefault();speak('後ろ')">🔊</button>
+    </summary>
+    <div class="vocab-detail">
+      <div class="vocab-meaning-full">後面</div>
+      <div class="vocab-ex">
+        <span class="ex-jp"><ruby>後<rt>うし</rt></ruby>ろを<ruby>見<rt>み</rt></ruby>てください。</span>
+        <span class="ex-tc">請看後面。</span>
+        <div class="ex-speak-row">
+          <button class="speak-btn" onclick="speak('後ろを見てください。')">🔊</button>
+        </div>
+      </div>
+      <div class="vocab-ex">
+        <span class="ex-jp">ホテルは<ruby>港<rt>みなと</rt></ruby>の<ruby>後<rt>うし</rt></ruby>ろにあります。</span>
+        <span class="ex-tc">飯店在港口的後面。</span>
+        <div class="ex-speak-row">
+          <button class="speak-btn" onclick="speak('ホテルは港の後ろにあります。')">🔊</button>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <!-- 角 -->
+  <details class="vocab-card">
+    <summary>
+      <div style="flex:1">
+        <span class="vocab-reading-small"></span>
+        <span class="vocab-jp"><ruby>角<rt>かど</rt></ruby></span>
+      </div>
+      <span class="vocab-meaning-badge">轉角</span>
+      <div class="vocab-pitch">1</div>
+      <button class="speak-btn" onclick="event.preventDefault();speak('角')">🔊</button>
+    </summary>
+    <div class="vocab-detail">
+      <div class="vocab-meaning-full">轉角、街角</div>
+      <div class="vocab-ex">
+        <span class="ex-jp">あの<ruby>角<rt>かど</rt></ruby>を<ruby>右<rt>みぎ</rt></ruby>に<ruby>曲<rt>ま</rt></ruby>がってください。</span>
+        <span class="ex-tc">請在那個轉角向右轉。</span>
+        <div class="ex-speak-row">
+          <button class="speak-btn" onclick="speak('あの角を右に曲がってください。')">🔊</button>
+        </div>
+      </div>
+      <div class="vocab-ex">
+        <span class="ex-jp"><ruby>角<rt>かど</rt></ruby>にコンビニがあります。</span>
+        <span class="ex-tc">轉角有便利商店。</span>
+        <div class="ex-speak-row">
+          <button class="speak-btn" onclick="speak('角にコンビニがあります。')">🔊</button>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <!-- 向かい -->
+  <details class="vocab-card">
+    <summary>
+      <div style="flex:1">
+        <span class="vocab-reading-small">むかい</span>
+        <span class="vocab-jp">向かい</span>
+      </div>
+      <span class="vocab-meaning-badge">對面</span>
+      <div class="vocab-pitch">0</div>
+      <button class="speak-btn" onclick="event.preventDefault();speak('向かい')">🔊</button>
+    </summary>
+    <div class="vocab-detail">
+      <div class="vocab-meaning-full">對面</div>
+      <div class="vocab-ex">
+        <span class="ex-jp"><ruby>駅<rt>えき</rt></ruby>の向かいにホテルがあります。</span>
+        <span class="ex-tc">車站對面有飯店。</span>
+        <div class="ex-speak-row">
+          <button class="speak-btn" onclick="speak('駅の向かいにホテルがあります。')">🔊</button>
+        </div>
+      </div>
+      <div class="vocab-ex">
+        <span class="ex-jp"><ruby>港<rt>みなと</rt></ruby>の向かいに<ruby>薬局<rt>やっきょく</rt></ruby>があります。</span>
+        <span class="ex-tc">港口對面有藥局。</span>
+        <div class="ex-speak-row">
+          <button class="speak-btn" onclick="speak('港の向かいに薬局があります。')">🔊</button>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <!-- 隣 -->
+  <details class="vocab-card">
+    <summary>
+      <div style="flex:1">
+        <span class="vocab-reading-small"></span>
+        <span class="vocab-jp"><ruby>隣<rt>となり</rt></ruby></span>
+      </div>
+      <span class="vocab-meaning-badge">旁邊</span>
+      <div class="vocab-pitch">0</div>
+      <button class="speak-btn" onclick="event.preventDefault();speak('隣')">🔊</button>
+    </summary>
+    <div class="vocab-detail">
+      <div class="vocab-meaning-full">旁邊、隔壁</div>
+      <div class="vocab-ex">
+        <span class="ex-jp">コンビニの<ruby>隣<rt>となり</rt></ruby>に<ruby>薬局<rt>やっきょく</rt></ruby>があります。</span>
+        <span class="ex-tc">便利商店旁邊有藥局。</span>
+        <div class="ex-speak-row">
+          <button class="speak-btn" onclick="speak('コンビニの隣に薬局があります。')">🔊</button>
+        </div>
+      </div>
+      <div class="vocab-ex">
+        <span class="ex-jp"><ruby>隣<rt>となり</rt></ruby>の<ruby>建物<rt>たてもの</rt></ruby>はホテルです。</span>
+        <span class="ex-tc">旁邊的建築物是飯店。</span>
+        <div class="ex-speak-row">
+          <button class="speak-btn" onclick="speak('隣の建物はホテルです。')">🔊</button>
+        </div>
+      </div>
+    </div>
+  </details>
+
+</div>
+
+<div class="page-footer">
+  使用原生 &lt;details&gt;/&lt;summary&gt; 互動，免 JavaScript<br>
+  🔊 發音由 Safari 內建日語語音引擎提供
+</div>
+
+<script>
+function speak(text) {
+  if (!('speechSynthesis' in window)) {
+    alert('請使用 Safari 瀏覽器以啟用發音功能。');
+    return;
+  }
+  window.speechSynthesis.cancel();
+  var utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'ja-JP';
+  utter.rate = 1.0;
+  utter.pitch = 1.0;
+  var voices = window.speechSynthesis.getVoices();
+  var jaVoice = voices.find(function(v){ return v.lang === 'ja-JP'; })
+             || voices.find(function(v){ return v.lang.startsWith('ja'); });
+  if (jaVoice) utter.voice = jaVoice;
+  window.speechSynthesis.speak(utter);
+}
+if ('speechSynthesis' in window) {
+  window.speechSynthesis.onvoiceschanged = function() { window.speechSynthesis.getVoices(); };
+  window.speechSynthesis.getVoices();
+}
+</script>
+
+</body>
+</html>
