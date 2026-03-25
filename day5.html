@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>田中慶介日語課 DAY5 問路</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Noto+Sans+TC:wght@400;700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #f0f3f8;
+  --card: #ffffff;
+  --border: #dde2ea;
+  --text: #1a2332;
+  --sub: #5a6a7d;
+  --accent: #2d5fa0;
+  --accent-light: #e4ecf8;
+  --green-light: #e4f2eb;
+  --green-dark: #1a3a2a;
+  --gray-bubble: #eceef2;
+  --ruby: #2d5fa0;
+  --grammar: #2d6a4f;
+  --grammar-light: #e4f2eb;
+  --shadow: 0 2px 10px rgba(0,0,0,0.07);
+  --speak-bg: #f0ece4;
+  --speak-bg-active: #e0dbd0;
+  --speak-size: 34px;
+}
+
+body {
+  font-family: 'Noto Sans TC', 'Noto Sans JP', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  padding: 0 0 52px;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+ruby rt {
+  font-size: 10px;
+  color: var(--ruby);
+  font-weight: 400;
+}
+
+.speak-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--speak-size);
+  height: var(--speak-size);
+  border-radius: 50%;
+  background: var(--speak-bg);
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  line-height: 1;
+  flex-shrink: 0;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.15s, transform 0.1s, box-shadow 0.15s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.18);
+}
+.speak-btn:active {
+  transform: scale(0.92);
+  background: var(--speak-bg-active);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+
+.bubble-foot {
+  padding: 2px 14px 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.speak-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.ex-speak-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.page-header {
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  padding: 18px 18px 16px;
+}
+.page-tag {
+  display: inline-flex;
+  align-items: center;
+  font-size: 12px;
+  color: var(--sub);
+  background: var(--accent-light);
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.page-header h1 { font-size: 26px; font-weight: 900; color: var(--text); }
+.page-header p { font-size: 14px; color: var(--sub); margin-top: 5px; }
+
+.section-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 16px 8px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+}
+.section-label span { font-size: 12px; color: var(--sub); font-weight: 400; }
+
+.scene-card {
+  margin: 0 12px 4px;
+  background: var(--card);
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+.scene-svg-wrap {
+  background: linear-gradient(180deg, #cddff5 0%, #e8f0fa 100%);
+  padding: 20px 16px 16px;
+}
+.scene-svg { width: 100%; display: block; }
+
+.chat-area {
+  padding: 0 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.chat-row { display: flex; align-items: flex-end; gap: 10px; }
+.chat-row.right { flex-direction: row-reverse; }
+.chat-avatar {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+  border: 2px solid var(--border);
+  background: var(--card);
+}
+.chat-col { display: flex; flex-direction: column; max-width: 78%; gap: 4px; }
+.chat-row.right .chat-col { align-items: flex-end; }
+.chat-role { font-size: 12px; color: var(--sub); font-weight: 700; padding: 0 4px; }
+
+.bubble-card {
+  background: var(--card);
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  width: 100%;
+}
+details.chat-bubble summary {
+  list-style: none;
+  cursor: pointer;
+  user-select: none;
+}
+details.chat-bubble summary::-webkit-details-marker { display: none; }
+.bubble-body {
+  padding: 13px 17px;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.9;
+  color: var(--text);
+  background: var(--gray-bubble);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 10px;
+}
+.bubble-body.student {
+  background: var(--green-light);
+  color: var(--green-dark);
+}
+.bubble-text { flex: 1; }
+.bubble-foot {
+  display: none;
+}
+.bubble-expanded {
+  padding: 10px 17px 4px;
+  font-size: 15px;
+  color: var(--sub);
+  line-height: 1.7;
+  border-top: 1px solid var(--border);
+}
+.bubble-expanded .tc {
+  display: block;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+  font-family: 'Noto Sans TC', sans-serif;
+}
+
+.sentence-card {
+  margin: 6px 12px;
+  background: var(--card);
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  padding: 16px 18px 18px;
+}
+.sent-num {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+.sent-reading {
+  font-size: 13px;
+  color: var(--ruby);
+  font-family: 'Noto Sans JP', sans-serif;
+  letter-spacing: 2px;
+  margin-bottom: 4px;
+  min-height: 20px;
+}
+.sent-main {
+  font-size: 30px;
+  font-weight: 900;
+  font-family: 'Noto Sans JP', sans-serif;
+  color: var(--text);
+  line-height: 1.9;
+  margin-bottom: 10px;
+}
+.sent-chunks {
+  font-size: 14px;
+  color: var(--sub);
+  font-family: 'Noto Sans JP', sans-serif;
+  margin-bottom: 12px;
+  letter-spacing: 0.5px;
+  line-height: 1.9;
+}
+.sent-meaning {
+  background: var(--accent-light);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1.6;
+}
+.sent-note {
+  font-size: 13px;
+  color: var(--sub);
+  font-weight: 400;
+  margin-top: 4px;
+  line-height: 1.8;
+}
+
+.vocab-list { display: flex; flex-direction: column; gap: 8px; padding: 0 12px; }
+details.vocab-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+details.vocab-card summary {
+  list-style: none;
+  padding: 16px 18px;
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+details.vocab-card summary::-webkit-details-marker { display: none; }
+.vocab-reading { font-size: 12px; color: var(--sub); font-family: 'Noto Sans JP', sans-serif; display: block; margin-bottom: 4px; }
+.vocab-kanji { font-size: 22px; font-weight: 700; font-family: 'Noto Sans JP', sans-serif; color: var(--text); line-height: 1.9; }
+.vocab-pitch {
+  margin-left: auto;
+  background: var(--accent-light);
+  border-radius: 8px;
+  width: 30px; height: 30px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; font-weight: 700;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+.vocab-detail {
+  padding: 2px 18px 18px;
+  border-top: 1px solid var(--border);
+}
+.vocab-meaning {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 10px;
+  padding-top: 12px;
+  font-family: 'Noto Sans TC', sans-serif;
+}
+.vocab-ex {
+  margin-bottom: 8px;
+  padding: 10px 12px 12px;
+  background: var(--bg);
+  border-radius: 10px;
+  border-left: 3px solid var(--accent);
+}
+.vocab-ex .ex-jp {
+  font-size: 16px;
+  font-weight: 700;
+  font-family: 'Noto Sans JP', sans-serif;
+  color: var(--text);
+  display: block;
+  margin-bottom: 4px;
+  line-height: 1.9;
+}
+.vocab-ex .ex-tc {
+  font-size: 13px;
+  color: var(--sub);
+  display: block;
+}
+
+.grammar-card {
+  margin: 6px 12px;
+  background: var(--grammar-light);
+  border: 1px solid #a8d4b8;
+  border-radius: 16px;
+  padding: 16px 18px;
+  box-shadow: var(--shadow);
+}
+.grammar-title { font-size: 13px; font-weight: 700; letter-spacing: 1px; color: var(--grammar); margin-bottom: 10px; }
+.grammar-pattern {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 16px; font-weight: 700;
+  color: var(--text); margin-bottom: 14px; line-height: 1.9;
+}
+.grammar-pattern .hl { background: var(--grammar); color: #fff; padding: 2px 6px; border-radius: 5px; }
+.grammar-table { width: 100%; border-collapse: collapse; font-size: 15px; }
+.grammar-table tr { border-bottom: 1px solid #b8d8c4; }
+.grammar-table tr:last-child { border-bottom: none; }
+.grammar-table td { padding: 9px 4px; font-family: 'Noto Sans JP', sans-serif; line-height: 1.9; }
+.grammar-table td:last-child { color: var(--sub); font-family: 'Noto Sans TC', sans-serif; text-align: right; }
+.g-hl { background: var(--grammar); color: #fff; padding: 0 4px; border-radius: 3px; font-weight: 700; }
+
+.practice-list { display: flex; flex-direction: column; gap: 8px; padding: 0 12px; }
+details.practice-item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+details.practice-item summary {
+  list-style: none;
+  padding: 16px 18px;
+  cursor: pointer;
+  user-select: none;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.8;
+}
+details.practice-item summary::-webkit-details-marker { display: none; }
+.q-num { font-size: 11px; font-weight: 700; color: var(--accent); letter-spacing: 1px; display: block; margin-bottom: 6px; }
+.ans-body { padding: 2px 18px 18px; border-top: 1px solid var(--border); }
+.ans-label { font-size: 11px; font-weight: 700; color: var(--grammar); letter-spacing: 1px; display: block; padding-top: 14px; margin-bottom: 8px; }
+.ans-jp { font-size: 22px; font-weight: 900; font-family: 'Noto Sans JP', sans-serif; color: var(--text); margin-bottom: 6px; line-height: 1.9; }
+.ans-tc { font-size: 14px; color: var(--sub); line-height: 1.8; }
+
+.page-footer {
+  margin: 24px 12px 0;
+  padding: 16px 18px;
+  background: var(--card);
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  font-size: 12px; color: var(--sub);
+  line-height: 1.7; text-align: center;
+}
+
+.spacer { height: 8px; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="page-tag">田中慶介日語課 ｜ DAY5 手機相容版</div>
+  <h1>問路</h1>
+  <p>どこですか・<ruby>何分<rt>なんぷん</rt></ruby>くらい・この<ruby>地図<rt>ちず</rt></ruby>で</p>
+</div>
+
+<div class="section-label">場景插圖</div>
+<div class="scene-card">
+  <div class="scene-svg-wrap">
+    <svg class="scene-svg" viewBox="0 0 360 160" xmlns="http://www.w3.org/2000/svg">
+      <rect width="360" height="160" fill="#cddff5"/>
+      <rect y="120" width="360" height="40" fill="#b8c9a0"/>
+      <rect y="118" width="360" height="6" fill="#d4c9a8"/>
+      <rect x="10" y="40" width="60" height="80" fill="#e8d5b0" rx="3"/>
+      <rect x="20" y="52" width="15" height="18" fill="#a8c4d8" rx="2"/>
+      <rect x="45" y="52" width="15" height="18" fill="#a8c4d8" rx="2"/>
+      <rect x="20" y="78" width="15" height="18" fill="#a8c4d8" rx="2"/>
+      <rect x="45" y="78" width="15" height="18" fill="#a8c4d8" rx="2"/>
+      <rect x="280" y="30" width="70" height="90" fill="#d4c0a0" rx="3"/>
+      <rect x="292" y="44" width="14" height="16" fill="#a8c4d8" rx="2"/>
+      <rect x="316" y="44" width="14" height="16" fill="#a8c4d8" rx="2"/>
+      <rect x="292" y="68" width="14" height="16" fill="#a8c4d8" rx="2"/>
+      <rect x="316" y="68" width="14" height="16" fill="#a8c4d8" rx="2"/>
+      <rect x="292" y="92" width="14" height="16" fill="#a8c4d8" rx="2"/>
+      <rect x="316" y="92" width="14" height="16" fill="#a8c4d8" rx="2"/>
+      <rect x="178" y="60" width="4" height="62" fill="#8a9ab0"/>
+      <rect x="158" y="52" width="44" height="22" fill="#ffffff" rx="4" stroke="#8a9ab0" stroke-width="1.5"/>
+      <rect x="162" y="56" width="16" height="10" fill="#e07050" rx="2"/>
+      <rect x="182" y="56" width="16" height="10" fill="#5080c0" rx="2"/>
+      <rect x="225" y="82" width="18" height="28" fill="#4a7ab5" rx="3"/>
+      <circle cx="234" cy="76" r="10" fill="#f5c99a"/>
+      <ellipse cx="234" cy="68" rx="10" ry="5" fill="#3a2a1a"/>
+      <rect x="248" y="96" width="16" height="20" fill="#c0a060" rx="3"/>
+      <rect x="252" y="94" width="8" height="4" fill="#a08040" rx="1"/>
+      <line x1="248" y1="116" x2="264" y2="116" stroke="#a08040" stroke-width="1.5"/>
+      <circle cx="252" cy="118" r="3" fill="#707070"/>
+      <circle cx="260" cy="118" r="3" fill="#707070"/>
+      <line x1="225" y1="90" x2="210" y2="100" stroke="#f5c99a" stroke-width="4" stroke-linecap="round"/>
+      <rect x="192" y="97" width="20" height="14" fill="#fffde0" rx="2" stroke="#c0a060" stroke-width="1"/>
+      <line x1="196" y1="102" x2="208" y2="102" stroke="#a08040" stroke-width="0.8"/>
+      <line x1="196" y1="106" x2="204" y2="106" stroke="#a08040" stroke-width="0.8"/>
+      <rect x="128" y="84" width="16" height="26" fill="#7a6a8a" rx="3"/>
+      <circle cx="136" cy="78" r="9" fill="#f5c99a"/>
+      <ellipse cx="136" cy="71" rx="9" ry="4.5" fill="#2a2a2a"/>
+      <line x1="144" y1="90" x2="160" y2="86" stroke="#f5c99a" stroke-width="4" stroke-linecap="round"/>
+    </svg>
+  </div>
+</div>
+
+<div class="section-label">情境對話 <span>點擊氣泡展開翻譯</span></div>
+<div class="chat-area">
+
+  <div class="chat-row right">
+    <div class="chat-avatar">🧳</div>
+    <div class="chat-col">
+
+      <div class="bubble-card">
+        <details class="chat-bubble">
+          <summary><div class="bubble-body student"><span class="bubble-text">すみません、<ruby>駅<rt>えき</rt></ruby>はどこですか？</span><button class="speak-btn" onclick="speak('すみません、駅はどこですか？')">🔊</button></div></summary>
+          <div class="bubble-expanded">
+            <span class="tc">不好意思，車站在哪裡？</span>
+            最萬用的問路開場句。すみません 先說，對方會停下來。
+          </div>
+        </details>
+        <div class="bubble-foot"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chat-row left">
+    <div class="chat-avatar">🗺️</div>
+    <div class="chat-col">
+
+      <div class="bubble-card">
+        <details class="chat-bubble">
+          <summary><div class="bubble-body"><span class="bubble-text">あそこをまっすぐ<ruby>行<rt>い</rt></ruby>くと、<ruby>右<rt>みぎ</rt></ruby>にあります。</span><button class="speak-btn" onclick="speak('あそこをまっすぐ行くと、右にあります。')">🔊</button></div></summary>
+          <div class="bubble-expanded">
+            <span class="tc">直走過去那邊，右邊就有了。</span>
+            あそこ＝那邊，まっすぐ＝直走。聽懂方向詞最重要。
+          </div>
+        </details>
+        <div class="bubble-foot"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chat-row right">
+    <div class="chat-avatar">🧳</div>
+    <div class="chat-col">
+
+      <div class="bubble-card">
+        <details class="chat-bubble">
+          <summary><div class="bubble-body student"><span class="bubble-text"><ruby>駅<rt>えき</rt></ruby>まで、<ruby>歩<rt>ある</rt></ruby>いて<ruby>何分<rt>なんぷん</rt></ruby>くらいですか？</span><button class="speak-btn" onclick="speak('駅まで、歩いて何分くらいですか？')">🔊</button></div></summary>
+          <div class="bubble-expanded">
+            <span class="tc">走路到車站大概幾分鐘？</span>
+            くらい＝大概，讓問題聽起來更自然，不像在考驗對方。
+          </div>
+        </details>
+        <div class="bubble-foot"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chat-row left">
+    <div class="chat-avatar">🗺️</div>
+    <div class="chat-col">
+
+      <div class="bubble-card">
+        <details class="chat-bubble">
+          <summary><div class="bubble-body"><span class="bubble-text"><ruby>五分<rt>ごふん</rt></ruby>くらいですよ。</span><button class="speak-btn" onclick="speak('五分くらいですよ。')">🔊</button></div></summary>
+          <div class="bubble-expanded">
+            <span class="tc">大概五分鐘喔。</span>
+            よ 是確認語氣助詞，表示「我告訴你」。
+          </div>
+        </details>
+        <div class="bubble-foot"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chat-row right">
+    <div class="chat-avatar">🧳</div>
+    <div class="chat-col">
+
+      <div class="bubble-card">
+        <details class="chat-bubble">
+          <summary><div class="bubble-body student"><span class="bubble-text">この<ruby>地図<rt>ちず</rt></ruby>で、<ruby>今<rt>いま</rt></ruby>どこにいますか？</span><button class="speak-btn" onclick="speak('この地図で、今どこにいますか？')">🔊</button></div></summary>
+          <div class="bubble-expanded">
+            <span class="tc">在這張地圖上，我現在在哪裡？</span>
+            拿出地圖請對方指位置，比口頭說明更清楚。
+          </div>
+        </details>
+        <div class="bubble-foot"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chat-row left">
+    <div class="chat-avatar">🗺️</div>
+    <div class="chat-col">
+
+      <div class="bubble-card">
+        <details class="chat-bubble">
+          <summary><div class="bubble-body"><span class="bubble-text">ここです。<ruby>駅<rt>えき</rt></ruby>はここ。</span><button class="speak-btn" onclick="speak('ここです。駅はここ。')">🔊</button></div></summary>
+          <div class="bubble-expanded">
+            <span class="tc">在這裡。車站在這裡。</span>
+            指著地圖說明，ここ＝這裡。最直接的回應方式。
+          </div>
+        </details>
+        <div class="bubble-foot"></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="spacer"></div>
+<div class="section-label">句子學習</div>
+
+<div class="sentence-card">
+  <div class="sent-num">SENTENCE 1</div>
+  <div class="sent-reading"></div>
+  <div class="sent-main">すみません、〇〇はどこですか？</div>
+  <div class="sent-chunks">すみません｜〇〇は｜どこですか</div>
+  <div class="sent-meaning">
+    不好意思，〇〇在哪裡？
+    <div class="sent-note">〇〇換成目的地就能用。最萬用的問路開場句，すみません 先說，對方自然會停下來。</div>
+  </div>
+  <div class="speak-row">
+    <button class="speak-btn" onclick="speak('すみません、駅はどこですか？')">🔊</button>
+  </div>
+</div>
+
+<div class="sentence-card">
+  <div class="sent-num">SENTENCE 2</div>
+  <div class="sent-reading"></div>
+  <div class="sent-main">〇〇まで、<ruby>歩<rt>ある</rt></ruby>いて<ruby>何分<rt>なんぷん</rt></ruby>くらいですか？</div>
+  <div class="sent-chunks">〇〇まで｜歩いて｜何分くらいですか</div>
+  <div class="sent-meaning">
+    走路到〇〇大概幾分鐘？
+    <div class="sent-note">くらい＝大概，讓問題更自然。<ruby>歩<rt>ある</rt></ruby>いて＝用走路的方式，て形連接移動方式。</div>
+  </div>
+  <div class="speak-row">
+    <button class="speak-btn" onclick="speak('駅まで、歩いて何分くらいですか？')">🔊</button>
+  </div>
+</div>
+
+<div class="grammar-card">
+  <div class="grammar-title">📗 文法メモ　〜て形＋移動</div>
+  <div class="grammar-pattern">動詞<span class="hl">て形</span>＋行く／来る　＝　用什麼方式移動</div>
+  <table class="grammar-table">
+    <tr>
+      <td>歩い<span class="g-hl">て</span>行く</td>
+      <td>走過去</td>
+    </tr>
+    <tr>
+      <td>バスに乗っ<span class="g-hl">て</span>行く</td>
+      <td>搭巴士去</td>
+    </tr>
+    <tr>
+      <td>タクシーに乗っ<span class="g-hl">て</span>来た</td>
+      <td>搭計程車來</td>
+    </tr>
+  </table>
+</div>
+
+<div class="sentence-card">
+  <div class="sent-num">SENTENCE 3</div>
+  <div class="sent-reading"></div>
+  <div class="sent-main">この<ruby>地図<rt>ちず</rt></ruby>で、<ruby>今<rt>いま</rt></ruby>どこにいますか？</div>
+  <div class="sent-chunks">この地図で｜今｜どこに｜いますか</div>
+  <div class="sent-meaning">
+    在這張地圖上，我現在在哪裡？
+    <div class="sent-note">拿出地圖請對方指現在位置。<ruby>地図<rt>ちず</rt></ruby>で＝用這張地圖（工具），どこにいる＝存在於哪裡。</div>
+  </div>
+  <div class="speak-row">
+    <button class="speak-btn" onclick="speak('この地図で、今どこにいますか？')">🔊</button>
+  </div>
+</div>
+
+<div class="grammar-card">
+  <div class="grammar-title">📗 文法メモ　場所に いる　vs　場所で する</div>
+  <div class="grammar-pattern">場所<span class="hl">に</span>いる（存在） vs 場所<span class="hl">で</span>する（行動）</div>
+  <table class="grammar-table">
+    <tr>
+      <td>港<span class="g-hl">に</span>いる</td>
+      <td>在港口（存在）</td>
+    </tr>
+    <tr>
+      <td>港<span class="g-hl">で</span>写真を撮る</td>
+      <td>在港口拍照（行動）</td>
+    </tr>
+    <tr>
+      <td>どこ<span class="g-hl">に</span>いますか</td>
+      <td>你在哪裡？（找人位置）</td>
+    </tr>
+  </table>
+</div>
+
+<div class="section-label">互動生字卡 <span>點擊展開例句</span></div>
+<div class="vocab-list">
+
+  <details class="vocab-card">
+    <summary>
+      <div>
+        <span class="vocab-reading"></span>
+        <span class="vocab-kanji"><ruby>歩<rt>ある</rt></ruby>いて</span>
+      </div>
+      <div class="vocab-pitch">0</div>
+    </summary>
+    <div class="vocab-detail">
+      <div class="vocab-meaning">走路（歩く的て形）</div>
+      <div class="vocab-ex">
+        <span class="ex-jp"><ruby>港<rt>みなと</rt></ruby>まで<ruby>歩<rt>ある</rt></ruby>いて<ruby>行<rt>い</rt></ruby>きます。</span>
+        <span class="ex-tc">走路去港口。</span>
+        <div class="ex-speak-row">
+          <button class="speak-btn" onclick="speak('港まで歩いて行きます。')">🔊</button>
+        </div>
+      </div>
+      <div class="vocab-ex">
+        <span class="ex-jp">ホテルまで<ruby>歩<rt>ある</rt></ruby>いて<ruby>十分<rt>じゅっぷん</rt></ruby>です。</span>
+        <span class="ex-tc">走路到飯店要十分鐘。</span>
+        <div class="ex-speak-row">
+          <button class="speak-btn" onclick="speak('ホテルまで歩いて十分です。')">🔊</button>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <details class="vocab-card">
+    <summary>
+      <div>
+        <span class="vocab-reading"></span>
+        <span class="vocab-kanji"><ruby>何分<rt>なんぷん</rt></ruby></span>
+      </div>
+      <div class="vocab-pitch">1</div>
+    </summary>
+    <div class="vocab-detail">
+      <div class="vocab-meaning">幾分鐘</div>
+      <div class="vocab-ex">
+        <span class="ex-jp"><ruby>駅<rt>えき</rt></ruby>まで<ruby>何分<rt>なんぷん</rt></ruby>かかりますか？</span>
+        <span class="ex-tc">到車站要幾分鐘？</span>
+        <div class="ex-speak-row">
+          <button class="speak-btn" onclick="speak('駅まで何分かかりますか？')">🔊</button>
+        </div>
+      </div>
+      <div class="vocab-ex">
+        <span class="ex-jp">バスで<ruby>何分<rt>なんぷん</rt></ruby>くらいですか？</span>
+        <span class="ex-tc">搭巴士大概幾分鐘？</span>
+        <div class="ex-speak-row">
+          <button class="speak-btn" onclick="speak('バスで何分くらいですか？')">🔊</button>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <details class="vocab-card">
+    <summary>
+      <div>
+        <span class="vocab-reading"></span>
+        <span class="vocab-kanji"><ruby>地図<rt>ちず</rt></ruby></span>
+      </div>
+      <div class="vocab-pitch">1</div>
+    </summary>
+    <div class="vocab-detail">
+      <div class="vocab-meaning">地圖</div>
+      <div class="vocab-ex">
+        <span class="ex-jp">この<ruby>地図<rt>ちず</rt></ruby>を<ruby>見<rt>み</rt></ruby>てください。</span>
+        <span class="ex-tc">請看這張地圖。</span>
+        <div class="ex-speak-row">
+          <button class="speak-btn" onclick="speak('この地図を見てください。')">🔊</button>
+        </div>
+      </div>
+      <div class="vocab-ex">
+        <span class="ex-jp"><ruby>地図<rt>ちず</rt></ruby>で<ruby>場所<rt>ばしょ</rt></ruby>を<ruby>確認<rt>かくにん</rt></ruby>しました。</span>
+        <span class="ex-tc">用地圖確認了位置。</span>
+        <div class="ex-speak-row">
+          <button class="speak-btn" onclick="speak('地図で場所を確認しました。')">🔊</button>
+        </div>
+      </div>
+    </div>
+  </details>
+
+</div>
+
+<div class="section-label">互動練習 <span>先想，再點開答案</span></div>
+<div class="practice-list">
+
+  <details class="practice-item">
+    <summary>
+      <span class="q-num">Q1</span>
+      想問「廁所在哪裡？」怎麼說？（廁所＝トイレ）
+    </summary>
+    <div class="ans-body">
+      <span class="ans-label">答案</span>
+      <div class="ans-jp">すみません、トイレはどこですか？</div>
+      <div class="ans-tc">トイレ 是純假名詞，直接代入 〇〇 的位置就行。</div>
+      <div class="speak-row">
+        <button class="speak-btn" onclick="speak('すみません、トイレはどこですか？')">🔊</button>
+      </div>
+    </div>
+  </details>
+
+  <details class="practice-item">
+    <summary>
+      <span class="q-num">Q2</span>
+      想問「走路到<ruby>港<rt>みなと</rt></ruby>口大概幾分鐘？」怎麼說？（港口＝<ruby>港<rt>みなと</rt></ruby>）
+    </summary>
+    <div class="ans-body">
+      <span class="ans-label">答案</span>
+      <div class="ans-jp"><ruby>港<rt>みなと</rt></ruby>まで、<ruby>歩<rt>ある</rt></ruby>いて<ruby>何分<rt>なんぷん</rt></ruby>くらいですか？</div>
+      <div class="ans-tc">目的地＋まで，後面接<ruby>歩<rt>ある</rt></ruby>いて<ruby>何分<rt>なんぷん</rt></ruby>くらいですか，句型固定，換地名就好。</div>
+      <div class="speak-row">
+        <button class="speak-btn" onclick="speak('港まで、歩いて何分くらいですか？')">🔊</button>
+      </div>
+    </div>
+  </details>
+
+  <details class="practice-item">
+    <summary>
+      <span class="q-num">Q3</span>
+      拿著<ruby>地図<rt>ちず</rt></ruby>問路人「我現在在哪？」怎麼說？
+    </summary>
+    <div class="ans-body">
+      <span class="ans-label">答案</span>
+      <div class="ans-jp">この<ruby>地図<rt>ちず</rt></ruby>で、<ruby>今<rt>いま</rt></ruby>どこにいますか？</div>
+      <div class="ans-tc"><ruby>地図<rt>ちず</rt></ruby>で＝用這張地圖（工具用で），どこにいる＝存在於哪裡（存在用に）。</div>
+      <div class="speak-row">
+        <button class="speak-btn" onclick="speak('この地図で、今どこにいますか？')">🔊</button>
+      </div>
+    </div>
+  </details>
+
+</div>
+
+<div class="page-footer">
+  使用原生 &lt;details&gt;/&lt;summary&gt; 互動，免 JavaScript<br>
+  🔊 發音由 Safari 內建日語語音引擎提供
+</div>
+
+<script>
+function speak(text) {
+  if (!('speechSynthesis' in window)) {
+    alert('請使用 Safari 瀏覽器以啟用發音功能。');
+    return;
+  }
+  window.speechSynthesis.cancel();
+  var utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'ja-JP';
+  utter.rate = 1.0;
+  utter.pitch = 1.0;
+  var voices = window.speechSynthesis.getVoices();
+  var jaVoice = voices.find(function(v){ return v.lang === 'ja-JP'; })
+             || voices.find(function(v){ return v.lang.startsWith('ja'); });
+  if (jaVoice) utter.voice = jaVoice;
+  window.speechSynthesis.speak(utter);
+}
+if ('speechSynthesis' in window) {
+  window.speechSynthesis.onvoiceschanged = function() { window.speechSynthesis.getVoices(); };
+  window.speechSynthesis.getVoices();
+}
+</script>
+
+</body>
+</html>

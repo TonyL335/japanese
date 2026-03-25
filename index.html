@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>田中慶介日語課　28天郵輪旅遊日語</title>
+<title>田中慶介日語課｜28天學習進度</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Noto+Sans+TC:wght@400;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&family=Noto+Sans+JP:wght@400;700&display=swap');
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -19,9 +19,9 @@
   --accent-light: #e4ecf8;
   --green: #2d6a4f;
   --green-light: #e4f2eb;
-  --green-border: #a8d4b8;
+  --done-border: #2d6a4f;
+  --locked: #b0b8c4;
   --shadow: 0 2px 10px rgba(0,0,0,0.07);
-  --lock: #c8cdd6;
 }
 
 body {
@@ -34,461 +34,322 @@ body {
   margin: 0 auto;
 }
 
-/* Header */
-.site-header {
-  background: var(--accent);
-  color: #fff;
-  padding: 28px 20px 24px;
-}
-.site-header h1 {
-  font-size: 24px;
-  font-weight: 900;
-  margin-bottom: 4px;
-}
-.site-header p {
-  font-size: 13px;
-  opacity: 0.85;
-}
-
-/* Progress bar */
-.progress-wrap {
+.page-header {
   background: var(--card);
   border-bottom: 1px solid var(--border);
-  padding: 16px 20px;
+  padding: 20px 18px 16px;
 }
-.progress-label {
+.page-tag {
+  display: inline-flex;
+  align-items: center;
+  font-size: 12px;
+  color: var(--sub);
+  background: var(--accent-light);
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.page-header h1 { font-size: 26px; font-weight: 900; color: var(--text); }
+.page-header p { font-size: 14px; color: var(--sub); margin-top: 5px; }
+
+.progress-wrap {
+  margin: 16px 16px 4px;
+}
+.progress-top {
   display: flex;
   justify-content: space-between;
-  font-size: 13px;
-  color: var(--sub);
+  align-items: center;
   margin-bottom: 8px;
-  font-weight: 700;
 }
+.progress-label { font-size: 13px; font-weight: 700; color: var(--sub); }
+.progress-count { font-size: 13px; font-weight: 700; color: var(--green); }
 .progress-bar-bg {
   background: var(--border);
   border-radius: 10px;
-  height: 10px;
+  height: 8px;
   overflow: hidden;
 }
 .progress-bar-fill {
-  background: linear-gradient(90deg, var(--green) 0%, #52b788 100%);
+  background: var(--green);
   height: 100%;
   border-radius: 10px;
-  width: 14.28%; /* 4/28 */
-  transition: width 0.4s ease;
+  width: calc(5 / 28 * 100%);
+  transition: width 0.6s ease;
 }
 
-/* Week section */
 .week-label {
   padding: 20px 16px 8px;
   font-size: 13px;
   font-weight: 700;
-  color: var(--sub);
   letter-spacing: 1px;
+  color: var(--sub);
 }
 
-/* Day cards */
-.day-list {
-  display: flex;
-  flex-direction: column;
+.day-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 8px;
   padding: 0 12px;
 }
 
 .day-card {
-  border-radius: 16px;
-  border: 1px solid var(--border);
   background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px 14px 12px;
   box-shadow: var(--shadow);
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  padding: 14px 16px;
-  gap: 14px;
   text-decoration: none;
-  color: var(--text);
-  position: relative;
+  color: inherit;
+  display: block;
+  transition: box-shadow 0.15s;
 }
 
-/* Completed */
-.day-card.done {
-  border-color: var(--green-border);
-  background: var(--green-light);
-  border-left: 4px solid var(--green);
-}
-.day-card.done .day-num { color: var(--green); }
-.day-card.done .day-check { color: var(--green); font-size: 18px; }
-
-/* Locked */
 .day-card.locked {
   opacity: 0.55;
-  cursor: default;
   pointer-events: none;
 }
-.day-card.locked .day-icon { filter: grayscale(1); }
 
-/* Review day */
-.day-card.review {
-  background: #fff8e1;
-  border-color: #ffe082;
-}
-.day-card.review.done {
+.day-card.done {
+  border-left: 4px solid var(--done-border);
   background: var(--green-light);
-  border-color: var(--green-border);
-  border-left: 4px solid var(--green);
+}
+.day-card.done .day-num { color: var(--green); }
+.day-card.done .day-title { color: var(--green); }
+.day-card.done .day-check { color: var(--green); font-size: 14px; }
+
+.day-card.review {
+  grid-column: 1 / -1;
+  background: var(--accent-light);
+  border-color: #b8cde8;
+}
+.day-card.review .day-num { color: var(--accent); }
+.day-card.review .day-title { color: var(--accent); }
+.day-card.review.done {
+  border-left: 4px solid var(--done-border);
+  background: var(--green-light);
 }
 
 .day-num {
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 700;
+  letter-spacing: 2px;
   color: var(--sub);
-  letter-spacing: 1px;
-  min-width: 36px;
+  margin-bottom: 5px;
 }
-.day-icon {
-  font-size: 24px;
-  flex-shrink: 0;
+.day-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
-.day-info { flex: 1; }
 .day-title {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 700;
-  margin-bottom: 2px;
+  color: var(--text);
+  line-height: 1.3;
 }
-.day-sub {
-  font-size: 12px;
-  color: var(--sub);
-}
-.day-check {
-  font-size: 20px;
-  flex-shrink: 0;
-}
-.day-lock {
-  font-size: 16px;
-  color: var(--lock);
-  flex-shrink: 0;
-}
-
-.spacer { height: 4px; }
+.day-check { font-size: 0; }
+.day-card.done .day-check { font-size: 14px; }
 </style>
 </head>
 <body>
 
-<div class="site-header">
-  <h1>田中慶介日語課</h1>
-  <p>28天郵輪旅遊日語　手機學習版</p>
+<div class="page-header">
+  <div class="page-tag">田中慶介日語課</div>
+  <h1>28天學習進度</h1>
+  <p>郵輪旅遊日語・每天一個情境</p>
 </div>
 
 <div class="progress-wrap">
-  <div class="progress-label">
-    <span>學習進度</span>
-    <span>4 / 28</span>
+  <div class="progress-top">
+    <span class="progress-label">整體進度</span>
+    <span class="progress-count">5 / 28</span>
   </div>
   <div class="progress-bar-bg">
     <div class="progress-bar-fill"></div>
   </div>
 </div>
 
-<!-- 第一週 -->
+<!-- ── 第一週 ── -->
 <div class="week-label">第一週　抵達與移動</div>
-<div class="day-list">
+<div class="day-grid">
 
-  <a href="day1.html" class="day-card done">
+  <a class="day-card done" href="day1.html">
     <div class="day-num">DAY 1</div>
-    <div class="day-icon">🚢</div>
-    <div class="day-info">
+    <div class="day-row">
       <div class="day-title">入港問候</div>
-      <div class="day-sub">はじめまして・よろしくおねがいします</div>
+      <div class="day-check">✓</div>
     </div>
-    <div class="day-check">✅</div>
   </a>
 
-  <a href="day2.html" class="day-card done">
+  <a class="day-card done" href="day2.html">
     <div class="day-num">DAY 2</div>
-    <div class="day-icon">🛃</div>
-    <div class="day-info">
+    <div class="day-row">
       <div class="day-title">海關申報</div>
-      <div class="day-sub">申告するものはありますか</div>
+      <div class="day-check">✓</div>
     </div>
-    <div class="day-check">✅</div>
   </a>
 
-  <a href="day3.html" class="day-card done">
+  <a class="day-card done" href="day3.html">
     <div class="day-num">DAY 3</div>
-    <div class="day-icon">🚕</div>
-    <div class="day-info">
+    <div class="day-row">
       <div class="day-title">搭計程車</div>
-      <div class="day-sub">〜までおねがいします・ここで止めてください</div>
+      <div class="day-check">✓</div>
     </div>
-    <div class="day-check">✅</div>
   </a>
 
-  <a href="day4.html" class="day-card done">
+  <a class="day-card done" href="day4.html">
     <div class="day-num">DAY 4</div>
-    <div class="day-icon">🚃</div>
-    <div class="day-info">
-      <div class="day-title">搭巴士・電車</div>
-      <div class="day-sub">何番線ですか・乗り換えはどこですか</div>
+    <div class="day-row">
+      <div class="day-title">搭巴士電車</div>
+      <div class="day-check">✓</div>
     </div>
-    <div class="day-check">✅</div>
   </a>
 
-  <div class="day-card locked">
+  <a class="day-card done" href="day5.html">
     <div class="day-num">DAY 5</div>
-    <div class="day-icon">🗺️</div>
-    <div class="day-info">
+    <div class="day-row">
       <div class="day-title">問路</div>
-      <div class="day-sub">〜はどこですか・まっすぐ行く</div>
+      <div class="day-check">✓</div>
     </div>
-    <div class="day-lock">🔒</div>
-  </div>
+  </a>
 
   <div class="day-card locked">
     <div class="day-num">DAY 6</div>
-    <div class="day-icon">🏨</div>
-    <div class="day-info">
+    <div class="day-row">
       <div class="day-title">飯店 Check-in</div>
-      <div class="day-sub">予約しています・チェックインをおねがいします</div>
     </div>
-    <div class="day-lock">🔒</div>
   </div>
 
-  <div class="day-card locked review">
+  <div class="day-card review locked">
     <div class="day-num">DAY 7</div>
-    <div class="day-icon">📝</div>
-    <div class="day-info">
+    <div class="day-row">
       <div class="day-title">【複習】第一週</div>
-      <div class="day-sub">DAY 1〜6 複習出題</div>
     </div>
-    <div class="day-lock">🔒</div>
   </div>
 
 </div>
 
-<!-- 第二週 -->
+<!-- ── 第二週 ── -->
 <div class="week-label">第二週　飲食與購物</div>
-<div class="day-list">
+<div class="day-grid">
 
   <div class="day-card locked">
     <div class="day-num">DAY 8</div>
-    <div class="day-icon">🏪</div>
-    <div class="day-info">
-      <div class="day-title">便利商店</div>
-      <div class="day-sub">温めますか・袋はいりますか</div>
-    </div>
-    <div class="day-lock">🔒</div>
+    <div class="day-row"><div class="day-title">便利商店</div></div>
   </div>
 
   <div class="day-card locked">
     <div class="day-num">DAY 9</div>
-    <div class="day-icon">🍻</div>
-    <div class="day-info">
-      <div class="day-title">點餐居酒屋</div>
-      <div class="day-sub">〜をください・おすすめはなんですか</div>
-    </div>
-    <div class="day-lock">🔒</div>
+    <div class="day-row"><div class="day-title">點餐居酒屋</div></div>
   </div>
 
   <div class="day-card locked">
     <div class="day-num">DAY 10</div>
-    <div class="day-icon">🚫</div>
-    <div class="day-info">
-      <div class="day-title">過敏不吃</div>
-      <div class="day-sub">〜アレルギーがあります・〜は食べられません</div>
-    </div>
-    <div class="day-lock">🔒</div>
+    <div class="day-row"><div class="day-title">過敏不吃</div></div>
   </div>
 
   <div class="day-card locked">
     <div class="day-num">DAY 11</div>
-    <div class="day-icon">💳</div>
-    <div class="day-info">
-      <div class="day-title">結帳</div>
-      <div class="day-sub">カードで払えますか・レシートをください</div>
-    </div>
-    <div class="day-lock">🔒</div>
+    <div class="day-row"><div class="day-title">結帳</div></div>
   </div>
 
   <div class="day-card locked">
     <div class="day-num">DAY 12</div>
-    <div class="day-icon">💊</div>
-    <div class="day-info">
-      <div class="day-title">藥妝店</div>
-      <div class="day-sub">〜はありますか・どこにありますか</div>
-    </div>
-    <div class="day-lock">🔒</div>
+    <div class="day-row"><div class="day-title">藥妝店</div></div>
   </div>
 
   <div class="day-card locked">
     <div class="day-num">DAY 13</div>
-    <div class="day-icon">🏷️</div>
-    <div class="day-info">
-      <div class="day-title">殺價確認價格</div>
-      <div class="day-sub">いくらですか・もう少し安くなりますか</div>
-    </div>
-    <div class="day-lock">🔒</div>
+    <div class="day-row"><div class="day-title">殺價確認價格</div></div>
   </div>
 
-  <div class="day-card locked review">
+  <div class="day-card review locked">
     <div class="day-num">DAY 14</div>
-    <div class="day-icon">📝</div>
-    <div class="day-info">
-      <div class="day-title">【複習】第二週</div>
-      <div class="day-sub">DAY 8〜13 複習出題</div>
-    </div>
-    <div class="day-lock">🔒</div>
+    <div class="day-row"><div class="day-title">【複習】第二週</div></div>
   </div>
 
 </div>
 
-<!-- 第三週 -->
+<!-- ── 第三週 ── -->
 <div class="week-label">第三週　緊急與生活</div>
-<div class="day-list">
+<div class="day-grid">
 
   <div class="day-card locked">
     <div class="day-num">DAY 15</div>
-    <div class="day-icon">🤒</div>
-    <div class="day-info">
-      <div class="day-title">身體不舒服</div>
-      <div class="day-sub">気分が悪いです・病院に連れて行ってください</div>
-    </div>
-    <div class="day-lock">🔒</div>
+    <div class="day-row"><div class="day-title">身體不舒服</div></div>
   </div>
 
   <div class="day-card locked">
     <div class="day-num">DAY 16</div>
-    <div class="day-icon">🚻</div>
-    <div class="day-info">
-      <div class="day-title">找廁所設施</div>
-      <div class="day-sub">トイレはどこですか・エレベーターは</div>
-    </div>
-    <div class="day-lock">🔒</div>
+    <div class="day-row"><div class="day-title">找廁所設施</div></div>
   </div>
 
   <div class="day-card locked">
     <div class="day-num">DAY 17</div>
-    <div class="day-icon">📱</div>
-    <div class="day-info">
-      <div class="day-title">手機網路</div>
-      <div class="day-sub">WiFiはありますか・パスワードは</div>
-    </div>
-    <div class="day-lock">🔒</div>
+    <div class="day-row"><div class="day-title">手機網路</div></div>
   </div>
 
   <div class="day-card locked">
     <div class="day-num">DAY 18</div>
-    <div class="day-icon">😰</div>
-    <div class="day-info">
-      <div class="day-title">遺失物品</div>
-      <div class="day-sub">〜をなくしました・落とし物センターは</div>
-    </div>
-    <div class="day-lock">🔒</div>
+    <div class="day-row"><div class="day-title">遺失物品</div></div>
   </div>
 
   <div class="day-card locked">
     <div class="day-num">DAY 19</div>
-    <div class="day-icon">📸</div>
-    <div class="day-info">
-      <div class="day-title">請人拍照</div>
-      <div class="day-sub">写真を撮ってもらえますか</div>
-    </div>
-    <div class="day-lock">🔒</div>
+    <div class="day-row"><div class="day-title">請人拍照</div></div>
   </div>
 
   <div class="day-card locked">
     <div class="day-num">DAY 20</div>
-    <div class="day-icon">🌤️</div>
-    <div class="day-info">
-      <div class="day-title">天氣閒聊</div>
-      <div class="day-sub">今日はいい天気ですね・暑いですね</div>
-    </div>
-    <div class="day-lock">🔒</div>
+    <div class="day-row"><div class="day-title">天氣閒聊</div></div>
   </div>
 
-  <div class="day-card locked review">
+  <div class="day-card review locked">
     <div class="day-num">DAY 21</div>
-    <div class="day-icon">📝</div>
-    <div class="day-info">
-      <div class="day-title">【複習】第三週</div>
-      <div class="day-sub">DAY 15〜20 複習出題</div>
-    </div>
-    <div class="day-lock">🔒</div>
+    <div class="day-row"><div class="day-title">【複習】第三週</div></div>
   </div>
 
 </div>
 
-<!-- 第四週 -->
+<!-- ── 第四週 ── -->
 <div class="week-label">第四週　進階溝通</div>
-<div class="day-list">
+<div class="day-grid">
 
   <div class="day-card locked">
     <div class="day-num">DAY 22</div>
-    <div class="day-icon">❤️</div>
-    <div class="day-info">
-      <div class="day-title">表達喜歡不喜歡</div>
-      <div class="day-sub">〜が好きです・〜は苦手です</div>
-    </div>
-    <div class="day-lock">🔒</div>
+    <div class="day-row"><div class="day-title">表達喜歡不喜歡</div></div>
   </div>
 
   <div class="day-card locked">
     <div class="day-num">DAY 23</div>
-    <div class="day-icon">⚖️</div>
-    <div class="day-info">
-      <div class="day-title">比較兩樣東西</div>
-      <div class="day-sub">〜と〜どちらがいいですか</div>
-    </div>
-    <div class="day-lock">🔒</div>
+    <div class="day-row"><div class="day-title">比較兩樣東西</div></div>
   </div>
 
   <div class="day-card locked">
     <div class="day-num">DAY 24</div>
-    <div class="day-icon">🔄</div>
-    <div class="day-info">
-      <div class="day-title">請對方再說一次</div>
-      <div class="day-sub">もう一度言ってください・ゆっくり話してください</div>
-    </div>
-    <div class="day-lock">🔒</div>
+    <div class="day-row"><div class="day-title">請對方再說一次</div></div>
   </div>
 
   <div class="day-card locked">
     <div class="day-num">DAY 25</div>
-    <div class="day-icon">🤔</div>
-    <div class="day-info">
-      <div class="day-title">聽不懂時應對</div>
-      <div class="day-sub">日本語がわかりません・英語はわかりますか</div>
-    </div>
-    <div class="day-lock">🔒</div>
+    <div class="day-row"><div class="day-title">聽不懂時應對</div></div>
   </div>
 
   <div class="day-card locked">
     <div class="day-num">DAY 26</div>
-    <div class="day-icon">🙏</div>
-    <div class="day-info">
-      <div class="day-title">道謝道歉深化</div>
-      <div class="day-sub">おかげさまで・ご迷惑をおかけしました</div>
-    </div>
-    <div class="day-lock">🔒</div>
+    <div class="day-row"><div class="day-title">道謝道歉深化</div></div>
   </div>
 
   <div class="day-card locked">
     <div class="day-num">DAY 27</div>
-    <div class="day-icon">👋</div>
-    <div class="day-info">
-      <div class="day-title">離港道別</div>
-      <div class="day-sub">お世話になりました・またいつか</div>
-    </div>
-    <div class="day-lock">🔒</div>
+    <div class="day-row"><div class="day-title">離港道別</div></div>
   </div>
 
-  <div class="day-card locked review">
+  <div class="day-card review locked">
     <div class="day-num">DAY 28</div>
-    <div class="day-icon">🎌</div>
-    <div class="day-info">
-      <div class="day-title">【總複習】</div>
-      <div class="day-sub">DAY 1〜27 全課程複習</div>
-    </div>
-    <div class="day-lock">🔒</div>
+    <div class="day-row"><div class="day-title">【總複習】</div></div>
   </div>
 
 </div>
